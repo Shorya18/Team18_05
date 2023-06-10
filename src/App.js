@@ -39,7 +39,7 @@ function App() {
   const location = useLocation();
 
   const shouldRenderSidebar =
-    location.pathname !== "/" && location.pathname !== "/login";
+    location.pathname !== "/" && location.pathname !== "/login" &&location.pathname!=="/Registration"&&location.pathname!=="/info";
 
   return (
     <ThemeProvider theme={theme}>
