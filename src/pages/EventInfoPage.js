@@ -3,14 +3,16 @@ import '../components/css/addstaff.css';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+var moment = require('moment');
 
 
 export default function InfoPage() {
   const [EventData, setEventData] = useState([]);
   const { state } = useLocation();
   const data = {
-    Event_id: state.Event_Reg_Id,
+    Event_id: state.Event_id,
   };
+
 
   useEffect(() => {
       axios({
@@ -34,6 +36,7 @@ export default function InfoPage() {
     console.log(EventData);
   }, [EventData]);
   console.log(EventData);
+  const date_L = moment(EventData.startDate).format('DD MMM, YYYY');
 
   // const temp = EventData.startDate.split('T')[0];
   const navigate = useNavigate();
@@ -43,8 +46,7 @@ export default function InfoPage() {
       <div className="event-details">
         <div className="event-date">
           <h3>Date:</h3>
-          {/* {EventData.startDate.split('T')[0]} */}
-          {/* <div>{temp}</div> */}
+          <p>{date_L}</p>
         </div>
         <div className="event-location">
           <h3>Location:</h3>

@@ -56,6 +56,7 @@ const DeleteEvent = () => {
       headerName: "Start Date",
       headerAlign: "left",
       align: "left",
+      flex: 1,
         renderCell: (params) => params.row.startDate.split('T')[0],
     },
     {
@@ -63,6 +64,11 @@ const DeleteEvent = () => {
       headerName: "End Date",
       flex: 1,
       renderCell: (params) => params.row.endDate.split('T')[0],
+    },
+    {
+      field: "startTime",
+      headerName: "Start Time",
+      flex: 1,
     },
     {
       field: "venue",
@@ -88,7 +94,7 @@ const DeleteEvent = () => {
             deleteEvent(params.row._id);
           }}
         >
-          Delete
+          Cancel
         </Button>
       ),
     },
@@ -99,7 +105,7 @@ const DeleteEvent = () => {
       <Box display="flex" alignItems="center" mb="20px">
       <Header title="Manage Events" subtitle="All Event Details" />
         <Box ml="auto" display="flex" alignItems="center">
-          <Box mr={1}>
+          {/* <Box mr={1}>
             <Button
               onClick={() => {
                 navigate("/add-event");
@@ -109,10 +115,12 @@ const DeleteEvent = () => {
             >
               Add Staff
             </Button>
-          </Box>
+          </Box> */}
           <Box>
-            <Button type="submit" color="negative" variant="contained">
-              Delete Event
+            <Button onClick={() => {
+                navigate("/manage-event");
+              }} type="submit" color="negative" variant="contained">
+              Back
             </Button>
           </Box>
         </Box>

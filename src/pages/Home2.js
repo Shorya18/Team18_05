@@ -23,6 +23,8 @@ export default function Home() {
         console.error("Failed to retrieve Event data:", error);
       });
   }, []);
+  useEffect(() => {
+  }, [EventData]);
 
   return (
     <div>
@@ -33,11 +35,12 @@ export default function Home() {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-evenly",
+            flexDirection:"row",
+            justifyContent: "Left",
             marginTop: "50px",
-            maxWidth:"100vw"
-            // display: "grid",
-            // gridTemplateColumns: "repeat(3, 1fr)"
+            flexWrap: "wrap",
+            position: "relative",
+            marginLeft: "10px",
           }}
         >
           {EventData.map((Event) => (
