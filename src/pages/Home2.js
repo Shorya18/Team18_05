@@ -36,12 +36,15 @@ export default function Home() {
             justifyContent: "space-evenly",
             marginTop: "50px",
             maxWidth:"100vw",
+          
+            flexWrap: "wrap", // Enable wrapping of cards
             // display: "grid",
             // gridTemplateColumns: "repeat(3, 1fr)"
           }}
         >
           {EventData.map((Event) => (
             <Card
+            
               key={Event._id}
               description={Event.description}
               Event_id={Event._id}
