@@ -67,7 +67,7 @@ export default function Faq() {
             <Typography variant="h4">How can I register for an event?</Typography>
           </StyledAccordionSummary>
           <StyledAccordionDetails>
-            <Typography >
+            <Typography variant="h5">
               <li>Visit our website and navigate to the Events section.</li>
               <li>Find the event you are interested in and click on it to view the event details.</li>
               <li>Look for the registration or RSVP button and click on it.</li>
@@ -88,7 +88,7 @@ export default function Faq() {
             <Typography variant="h4">How can I contribute to the community support initiatives?</Typography>
           </StyledAccordionSummary>
           <StyledAccordionDetails>
-            <Typography>
+            <Typography variant="h5">
               We appreciate your willingness to contribute to our community support initiatives. There are several ways you can get involved:
 
               <li>Volunteer: Join our volunteer program and contribute your time and skills to various projects and activities.</li>
@@ -109,7 +109,7 @@ export default function Faq() {
             <Typography variant="h4">How can I get involved in volunteering?</Typography>
           </StyledAccordionSummary>
           <StyledAccordionDetails>
-            <Typography>
+            <Typography variant="h5">
             To get involved in volunteering:
 
               <li>Research local organizations.</li>

@@ -48,7 +48,7 @@ function App() {
         {shouldRenderSidebar && <Sidebar isSidebar={isSidebar} />}
         <main className="content">
           {/* {shouldRenderSidebar && <Topbar setIsSidebar={setIsSidebar} />} */}
-          <Box sx={{ marginTop: '40px'}}>
+          <Box>
 
           <Routes>
             <Route path="/" element={<Home />} />
