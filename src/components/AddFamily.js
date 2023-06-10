@@ -34,7 +34,7 @@ const AddFamily = () => {
       .then((response) => {
         navigate("/community-families", {
           state: {
-            community: data.community,
+            communityData: data.community,
           },
         });
         console.log("successfull");

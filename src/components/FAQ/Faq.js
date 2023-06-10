@@ -52,7 +52,7 @@ export default function Faq() {
     setExpanded3(newExpanded3 ? panel : false);
   };
   return (
-    <div >
+    <div style={{marginTop:"35px"}}>
       <div className="faqhead">Frequently Asked Questions</div>
       <div className="faq">
         <StyledAccordion 
