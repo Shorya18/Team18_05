@@ -120,7 +120,7 @@ const CommunityFamilies = () => {
                 //console.log(state.communityData);
                 navigate("/add-family", {
                   state: {
-                    communityData: state.communityData,
+                    community: state.communityData,
                   },
                 });
               }}

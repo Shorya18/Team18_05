@@ -96,7 +96,7 @@ export default function BelowHeroSection() {
         
       }}
     >
-      <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+      <div style={{display:"flex",flexDirection:"column",alignItems:"center",marginBottom:"25px"}}>
         <div className="gif">{View}</div>
         <div style={{ width: "500px", textAlign: "center",display:"flex",flexDirection:"column",alignItems:"center" }}>
       <div style={{fontSize:"20px"}}> <b>VISIT US</b></div> 

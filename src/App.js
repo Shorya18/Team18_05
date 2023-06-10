@@ -28,6 +28,7 @@ import ManageEvent from "./components/Tables/ManageEvents";
 import Registration from "./pages/Registration";
 import DeleteEvent from "./components/DeleteEvent";
 import InfoPage from "./pages/EventInfoPage";
+import AddUser2 from "./components/FamilyInfo/AddUser";
 
 
 
@@ -63,7 +64,7 @@ function App() {
             {/* CRUD */}
             <Route path="/add-staff" element={<AddStaff />} />
             <Route path="/Delete-staff" element={<DeleteStaff />} />
-            <Route path="/add-user" element={<AddUser />} />
+            <Route path="/add-user" element={<AddUser2 />} />
             <Route path="/add-community" element={<AddCommunity />} />
             <Route path="/add-event" element={<AddEvent />} />
             <Route path="/event" element={<EventDetails />} />
@@ -78,6 +79,7 @@ function App() {
             <Route path="/registration" element={<Registration/>}/>
             <Route path="/delete-event" element={<DeleteEvent/>}/>
             <Route path="/info" element={<InfoPage/>}/>
+            {/* <Route path="/check" element={<AddUser/>}/> */}
            
           </Routes>
         </main>

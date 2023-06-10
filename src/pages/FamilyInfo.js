@@ -17,8 +17,9 @@ export default function FamilyInfo() {
     house: false,
     assets: false,
   });
+
   const { state } = useLocation();
-  const obj=state;
+  const obj = state;
 
   const handleCheckboxChange = (event) => {
     setServices((prevServices) => ({
@@ -28,7 +29,25 @@ export default function FamilyInfo() {
   };
 
   const handleSubmit = () => {
-    // Handle form submission
+    const data = {
+      familyId: obj.familyId,
+      community: obj.communityData,
+      cookingFuel: services.cookingFuel,
+      sanitation: services.sanitation,
+      drinkingWater: services.drinkingWater,
+      electricity: services.electricity,
+      house: services.house,
+      assets: services.assets,
+    };
+    axios
+      .post("http://localhost:4421/add-familydetails", data)
+      .then((response) => {
+        const data = response.data;
+        alert("Updated");
+      })
+      .catch((error) => {
+        console.error("Failed to retrieve Community data:", error);
+      });
     console.log(services);
   };
 
@@ -52,7 +71,7 @@ export default function FamilyInfo() {
         );
         // console.log(foundUsers);
         setIndividual(foundUsers);
-        
+
         setIsLoading(false);
       })
       .catch((error) => {
@@ -61,7 +80,7 @@ export default function FamilyInfo() {
   }, []);
 
   return (
-    <div >
+    <div>
       {isLoading ? (
         <div
           style={{
@@ -78,7 +97,13 @@ export default function FamilyInfo() {
           Loading...
         </div>
       ) : (
-        <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <CheckMarkNav
             services={services}
             handleCheckboxChange={handleCheckboxChange}
@@ -133,7 +158,7 @@ export default function FamilyInfo() {
               />
             ))}
           </div>
-          <div style={{ display:"flex",alignContent: "center"}}>
+          <div style={{ display: "flex", alignContent: "center" }}>
             <LineGraph />
             <LineGraph />
           </div>

@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function DashboardCard(props) {
   const navigate = useNavigate();
- const mpiscore=0.5;
+ const mpiscore=0.2;
   // Define the color based on MPI score
-  let cardColor = '#83CFCD;';
+  let cardColor = '#83CFCD';
   if (mpiscore > 0.7) {
     cardColor = '#EF5261';
   } else if (mpiscore >= 0.5) {
