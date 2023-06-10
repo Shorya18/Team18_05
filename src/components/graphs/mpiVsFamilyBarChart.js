@@ -6,8 +6,6 @@ const MpiVsFamilyBarChart = ({ data }) => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette);
 
-	console.log(data)
-
 	return (
 		<ResponsiveBar
 			data={data}

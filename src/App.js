@@ -28,6 +28,7 @@ import ManageEvent from "./components/Tables/ManageEvents";
 import Registration from "./pages/Registration";
 import DeleteEvent from "./components/DeleteEvent";
 import InfoPage from "./pages/EventInfoPage";
+import { Box } from "@mui/material";
 
 
 
@@ -45,7 +46,9 @@ function App() {
       <div className="app">
         {shouldRenderSidebar && <Sidebar isSidebar={isSidebar} />}
         <main className="content">
-          {shouldRenderSidebar && <Topbar setIsSidebar={setIsSidebar} />}
+          {/* {shouldRenderSidebar && <Topbar setIsSidebar={setIsSidebar} />} */}
+          <Box sx={{ marginTop: '40px'}}>
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -80,6 +83,8 @@ function App() {
             <Route path="/info" element={<InfoPage/>}/>
            
           </Routes>
+          </Box>
+
         </main>
       </div>
     </ThemeProvider>

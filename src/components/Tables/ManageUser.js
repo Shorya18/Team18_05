@@ -47,6 +47,7 @@ const ManageUser = () => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette);
+
   const columns = [
     {
       field: "name",
@@ -86,8 +87,15 @@ const ManageUser = () => {
           color="primary"
           onClick={() => {
             console.log(params.row);
-            setIndividual(params.row);
-            handleOpen();
+            // setIndividual(params.row);
+            // handleOpen();
+
+            navigate(`/member-info`, {
+              state: { adharcard: params.row.adharCard,
+              communityData: params.row.community,
+              familyId: params.row.familyId
+               },
+            });
           }}
         >
           View
@@ -164,7 +172,7 @@ const ManageUser = () => {
         </Modal>
 
         <Header title="Manage Members" subtitle="Members Details" />
-        <Box ml="auto" display="flex" alignItems="center">
+        {/* <Box ml="auto" display="flex" alignItems="center">
           <Box mr={1}>
             <Button
               onClick={() => {
@@ -188,7 +196,7 @@ const ManageUser = () => {
               Delete Member
             </Button>
           </Box>
-        </Box>
+        </Box> */}
       </Box>
       <Box
         m="40px 0 0 0"

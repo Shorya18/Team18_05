@@ -130,35 +130,36 @@ const CommunityModal = () => {
   };
 
   const handleAddCommunities = () => {
-    console.log(selectedCommunities);
+    // console.log(selectedCommunities);
   };
 
   const handleAddStaffs = () => {
-    console.log(selectedStaffs);
+    // console.log(selectedStaffs);
   };
 
   const handleCommunitySelect = (community) => () => {
     setSelectedCommunities((prevSelected) => {
       const isSelected = prevSelected.some(
-        (selected) => selected.id === community.id
+        (selected) => selected._id === community._id
       );
 
       if (isSelected) {
-        return prevSelected.filter((selected) => selected.id !== community.id);
+        return prevSelected.filter((selected) => selected._id !== community._id);
       } else {
         return [...prevSelected, community];
       }
     });
+    
   };
 
-  const handleStaffSelect = (staff) => () => {
+  const handleStaffSelect = (staff) => {
     setSelectedStaffs((prevSelected) => {
       const isSelected = prevSelected.some(
-        (selected) => selected.id === staff.id
+        (selected) => selected._id === staff._id
       );
 
       if (isSelected) {
-        return prevSelected.filter((selected) => selected.id !== staff.id);
+        return prevSelected.filter((selected) => selected._id !== staff._id);
       } else {
         return [...prevSelected, staff];
       }
@@ -392,6 +393,20 @@ const CommunityModal = () => {
               />
               </div>
 
+              { selectedCommunities.length > 0 && <div style={{ marginBottom: '20px'}}>
+                <h4 style={{ marginBottom: 0 }}>
+                Added Communities: 
+                </h4>
+                { "  " + selectedCommunities.map(c => c.name).join(', ')}
+              </div>}
+
+              { selectedStaffs.length > 0 && <div style={{ marginBottom: '20px'}}>
+                <h4 style={{ marginBottom: 0 }}>
+                Added Staff: 
+                </h4>
+                { "  " + selectedStaffs.map(c => c.name).join(', ')}
+              </div>}
+
             <div className="role_info">
               <Button
                 variant="contained"
@@ -450,13 +465,15 @@ const CommunityModal = () => {
                     </TableCell>
                   </TableRow>
                 ))}
+
+
               </TableBody>
             </Table>
           </TableContainer>
         </Box>
       </Modal>
 
-      <Modal open={openCommunity} onClose={handleCloseCommunity}>
+      {/* <Modal open={openCommunity} onClose={handleCloseCommunity}>
         <Box sx={style}>
           <TableContainer>
             <Table>
@@ -484,7 +501,7 @@ const CommunityModal = () => {
             </Table>
           </TableContainer>
         </Box>
-      </Modal>
+      </Modal> */}
 
       {/* STAFF MODAL */}
       <Modal open={openStaff} onClose={handleCloseStaff}>
@@ -506,11 +523,12 @@ const CommunityModal = () => {
                         checked={selectedStaffs.some(
                           (selected) => selected._id === staff._id
                         )}
-                        onChange={handleStaffSelect(staff)}
+                        onChange={() => {handleStaffSelect(staff)}}
                       />
                     </TableCell>
                   </TableRow>
                 ))}
+
               </TableBody>
             </Table>
           </TableContainer>

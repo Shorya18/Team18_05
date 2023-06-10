@@ -3,18 +3,20 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 
 export default function DashboardCard(props) {
   const navigate = useNavigate();
- const mpiscore=0.5;
+
+ const mpiscore= props.mpi;
   // Define the color based on MPI score
-  let cardColor = '#83CFCD;';
+  let cardColor = '#79de79;';
   if (mpiscore > 0.7) {
-    cardColor = '#EF5261';
+    cardColor = '#fb6962';
   } else if (mpiscore >= 0.5) {
-    cardColor = '#FDD36A';
+    cardColor = '#fcfc99';
   }
 
   return (
@@ -34,15 +36,16 @@ export default function DashboardCard(props) {
         })
       }
     >
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          <b>{props.communityName}</b>
-        </Typography>
-        <Typography variant="h5" color="text.primary">
-          {props.description}
-        </Typography>
-        <Typography variant="body1" color="text.primary">
-          MPI SCORE:{mpiscore}
+      <CardContent sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%'}}>
+          <Typography gutterBottom variant="h5" component="div">
+            <b>{props.communityName}</b>
+            <Typography variant="h5" color="text.primary">
+              {props.description}
+            </Typography>
+          </Typography>
+
+        <Typography variant="h4" color="text.primary">
+            MPI: <span>{mpiscore}</span>
         </Typography>
       </CardContent>
       <CardActions>

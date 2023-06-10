@@ -12,6 +12,7 @@ const ManageEvent = () => {
   const [EventData, setEventData] = useState([]);
   const [EventData2, setEventData2] = useState([]);
   const [individual, setIndividual] = useState([]);
+  const [isEventDeleted, setIsEventDeleted] = useState(false);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -30,26 +31,23 @@ const ManageEvent = () => {
   };
 
   const navigate = useNavigate();
-  useEffect(() => {
+
+  const getActiveEventDetails = () => {
     axios
       .get("http://localhost:4421/details-Event")
       .then((response) => {
         const data = response.data;
         setEventData(data);
+        setIsEventDeleted(false);
       })
       .catch((error) => {
         console.error("Failed to retrieve staff data:", error);
       });
-  }, []);
+  }
 
-  useEffect(() => {
-    console.log(EventData);
-  }, [EventData]);
-
-
-  useEffect(() => {
+  const getInactiveEventDetails = () => {
     axios
-      .get("http://localhost:4421/details-Event/unactive")
+      .get("http://localhost:4421/details-Event-inactive")
       .then((response) => {
         const data = response.data;
         setEventData2(data);
@@ -57,13 +55,39 @@ const ManageEvent = () => {
       .catch((error) => {
         console.error("Failed to retrieve staff data:", error);
       });
-  }, []);
+  }
+
+  const deleteEvent = (id) => {
+    const data = {
+      _id: id,
+    };
+
+    axios
+      .post("http://localhost:4421/delete-Event", data)
+      .then((response) => {
+        console.log(response);
+        setIsEventDeleted(true);
+        // navigate("/manage-event");
+      })
+      .catch((error) => {
+        console.error("Failed to delete Event:", error);
+      });
+  };
+
+  useEffect(() => {
+    getActiveEventDetails();
+    getInactiveEventDetails();
+  }, [isEventDeleted]);
+
+  useEffect(() => {
+    console.log(EventData);
+  }, [EventData]);
+  
 
   useEffect(() => {
     console.log(EventData2);
   }, [EventData2]);
-
-
+  
 
   const theme = useTheme();
   const colors = tokens(theme.palette);
@@ -108,6 +132,8 @@ const ManageEvent = () => {
       headerName: "See More Details",
       flex: 1,
       renderCell: (params) => (
+        <Box>
+
         <Button
           variant="outlined"
           color="primary"
@@ -125,6 +151,21 @@ const ManageEvent = () => {
         >
           View
         </Button>
+
+        <Button
+          type="submit"
+          color="negative"
+          variant="contained"
+          style={{marginLeft: "10px"}}
+          onClick={() => {
+            deleteEvent(params.row._id);
+          }}
+          >
+          Cancel
+        </Button>
+
+        </Box>
+
       ),
     },
   ];
@@ -187,9 +228,25 @@ const ManageEvent = () => {
           </div>
         </div>
       </Box>
-      <div style={{textAlign: "center",marginTop: "20px" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently Active Event</div>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mt="20px">
+      <div style={{textAlign: "center" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently Active Event</div>
+
+        <Box ml="auto" display="flex" alignItems="center">
+          <Box mr={1}>
+            <Button
+              onClick={() => {
+                navigate("/add-event");
+              }}
+              color="secondary"
+              variant="contained"
+            >
+              Add Event
+            </Button>
+          </Box>
+        </Box>
+      </Box>
       <Box
-        m="40px 0 0 0"
+        m="20px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
@@ -224,9 +281,11 @@ const ManageEvent = () => {
           columns={columns}
         />
       </Box>
-      <div style={{textAlign: "center", marginTop: "30px" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently InActive Event</div>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mt="20px">
+      <div style={{ marginTop: "30px" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently Inactive Event</div>
+     </Box>
       <Box
-        m="40px 0 0 0"
+        m="20px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
@@ -261,7 +320,7 @@ const ManageEvent = () => {
           columns={columns2}
         />
       </Box>
-      <Box display="flex" alignItems="center" mt="20px" mb="20px">
+      {/* <Box display="flex" alignItems="center" mt="20px" mb="20px">
         <Box ml="auto" display="flex" alignItems="center">
           <Box mr={1}>
             <Button
@@ -287,7 +346,7 @@ const ManageEvent = () => {
             </Button>
           </Box>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

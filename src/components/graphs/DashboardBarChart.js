@@ -50,7 +50,7 @@ const DashboardBarChart = ({ Score, data }) => {
 				"MPI_Score"
 			]}
 			indexBy="name"
-			margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+			margin={{ top: 50, right: 130, bottom: 50, left: 100 }}
 			padding={0.3}
 			valueScale={{ type: "linear" }}
 			indexScale={{ type: "band", round: true }}
@@ -93,7 +93,7 @@ const DashboardBarChart = ({ Score, data }) => {
 				tickSize: 5,
 				tickPadding: 5,
 				tickRotation: 0,
-				legend: "Community Name", // changed
+				legend: "MPI Score", // changed
 				legendPosition: "middle",
 				legendOffset: 32,
 			}}
@@ -101,9 +101,9 @@ const DashboardBarChart = ({ Score, data }) => {
 				tickSize: 5,
 				tickPadding: 5,
 				tickRotation: 0,
-				legend: "MPI Score", // changed
+				legend: "Community Name", // changed
 				legendPosition: "middle",
-				legendOffset: -40,
+				legendOffset: -80,
 			}}
 			enableLabel={false}
 			labelSkipWidth={12}
@@ -112,6 +112,7 @@ const DashboardBarChart = ({ Score, data }) => {
 				from: "color",
 				modifiers: [["darker", 1.6]],
 			}}
+			layout='horizontal'
 			legends={[
 				{
 					dataFrom: "keys",

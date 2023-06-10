@@ -27,6 +27,11 @@ const Dashboard = () => {
 	const [eventData, setEventData] = useState([]);
   const [MPI, setMPI] = useState([]);
   const [barchart, setBarChartValue] = useState((<DashboardBarChart Score={MPI} data={communityData} />));
+  const [individual, setIndividual] = useState([]);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const navigate = useNavigate();
   let mpiScores = [];
@@ -53,6 +58,7 @@ const Dashboard = () => {
 			.then((response) => {
 				const data = response.data;
        // console.log(data);
+       data.reverse();
 				setEventData(data);
 			})
 			.catch((error) => {
@@ -124,6 +130,15 @@ const Dashboard = () => {
             // console.log(params.row);
             // setIndividual(params.row);
             // handleOpen();
+
+            navigate("/event-details", {
+              state: {
+                Event_id: params.row._id,
+              },
+            });
+
+            setIndividual(params.row);
+            handleOpen();
           }}
         >
           View
@@ -151,7 +166,7 @@ const Dashboard = () => {
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
 
-        <Box>
+        {/* <Box>
           <Button
             sx={{
               backgroundColor: colors.blueAccent[700],
@@ -164,7 +179,7 @@ const Dashboard = () => {
             <DownloadOutlinedIcon sx={{ mr: "10px" }} />
             Download Reports
           </Button>
-        </Box>
+        </Box> */}
       </Box>
 
       {/* GRID & CHARTS */}
@@ -180,7 +195,7 @@ const Dashboard = () => {
         {communityData.map((params, index) => (
         
            <DashboardCard key={index} communityName={params.name}
-           description={params.description}/>
+           description={params.description} mpi={params.MPI_Score}/>
         //   <Button
         //     key={index}
         //     sx={{
@@ -254,7 +269,7 @@ const Dashboard = () => {
             padding: "30px 30px 0 30px",
           }}
         >
-          MPI Score Trend of different communities
+          MPI Score of different communities
         </Typography>
         
         <Box
@@ -286,11 +301,11 @@ const Dashboard = () => {
 									.greenAccent[500]
 							}
 						>
-							UPCOMING EVENTS
+							EVENTS
 						</Typography>
             <Box
 					m=" 0 0 0"
-					height=""
+					height="350px"
 					sx={{
 						"& .MuiDataGrid-root": {
 							border: "none",
@@ -342,7 +357,8 @@ const Dashboard = () => {
 							Toolbar: CustomToolbar,
 						}}
             pageSize={20}
-            autoHeight={true}
+					height="350px"
+
 					/>
           </ Box>
       </Box>

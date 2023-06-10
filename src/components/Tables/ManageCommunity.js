@@ -6,6 +6,8 @@ import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { red } from '@mui/material/colors';
 
 const ManageCommunity = () => {
   const [communityData, setCommunityData] = useState([]);
@@ -78,15 +80,20 @@ const ManageCommunity = () => {
       headerName: "Delete Community",
       flex: 1,
       renderCell: (params) => (
-        <Button
-          color="negative"
-          variant="contained"
-          onClick={() => {
+        // <Button
+        // color="negative"
+        //   variant="contained"
+        //   onClick={() => {
+        //     console.log("delete");
+        //   }}
+        // >
+          <DeleteIcon sx={{ color: red[700] }}  onClick={() => {
             console.log("delete");
           }}
-        >
-          Delete Community
-        </Button>
+                  
+                  />
+
+        // </Button>
       ),
     },
   ];
