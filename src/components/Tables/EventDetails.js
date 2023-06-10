@@ -1,12 +1,17 @@
+
 import React from "react";
 import { Box, useTheme, Button, Modal, Typography } from "@mui/material";
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import moment from "moment"
 
+import { styled } from '@mui/material/styles';
 import axios from "axios";
 
 const EventDetails = () => {
@@ -14,6 +19,7 @@ const EventDetails = () => {
   const [UserData, setUserData] = useState([]);
   const [StaffData, setStaffData] = useState([]);
   const [individual, setIndividual] = useState([]);
+  const [EventData, setEventData] = useState([]);
 
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
@@ -81,8 +87,26 @@ const EventDetails = () => {
 
 
   useEffect(() => {
-    console.log(StaffData);
-  }, [StaffData]);
+    axios({
+      method: "POST",
+      url: "http://localhost:4421/details-Event/id",
+      data,
+    })
+      .then((res) => {
+        console.log(res);
+        const data = res.data;
+        setEventData(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+}, []);
+
+
+useEffect(() => {
+  console.log(EventData);
+}, [EventData]);
 
   const theme = useTheme();
   const colors = tokens(theme.palette);
@@ -99,6 +123,7 @@ const EventDetails = () => {
       type: "number",
       headerAlign: "left",
       align: "left",
+      flex: 1,
     },
     {
       field: "mobNo",
@@ -148,6 +173,7 @@ const EventDetails = () => {
       type: "number",
       headerAlign: "left",
       align: "left",
+      flex: 1,
     },
     {
       field: "mobile_no",
@@ -184,10 +210,42 @@ const EventDetails = () => {
     },
   ];
 
-  return (
-    <Box m="20px">
-      <Box display="flex" alignItems="center" mb="20px">
+  const date_start = moment(EventData.startDate).format('DD MMM, YYYY');
+  const date_end = moment(EventData.endDate).format('DD MMM, YYYY');
+  // const Total_Active_Events = EventData2.length
 
+  return (
+    <Box m="20px" p="20px"  style={{overflowY: "scroll", height: "90vh"}}>
+       <Box ml="auto" display="flex" alignItems="center">
+          <Box mr={1}>
+            <Button
+              onClick={() => {
+                navigate("/manage-event");
+              }}
+              color="warning"
+              variant="contained"
+            >
+              Back
+            </Button>
+          </Box>
+          <Box mr={1}>
+            <Button
+              onClick={() => {
+                navigate("/Registration", {
+                  state: {
+                    Event_id: EventData._id,
+                    Switcher: 1,
+                  }
+                });
+              }}
+              color="secondary"
+              variant="contained"
+            >
+              Register
+            </Button>
+          </Box>
+        </Box>
+      <Box display="flex" alignItems="center" mb="20px">
       <Modal
           open={open1}
           onClose={handleClose1}
@@ -252,22 +310,56 @@ const EventDetails = () => {
           </Box>
         </Modal>
 
-
-        <Header title="Attendeess" subtitle="Attendees Details" />
-        <Box ml="auto" display="flex" alignItems="center">
-          <Box mr={1}>
-            <Button
-              onClick={() => {
-                navigate("/manage-event");
-              }}
-              color="secondary"
-              variant="contained"
-            >
-              Back
-            </Button>
-          </Box>
-        </Box>
+        <Grid container spacing={2}>
+        <Grid item xs={12}>
+            <h1 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "25px", margin: "0px", padding: "0px"}}>Welcome to Event Detail Section</h1>
+        </Grid>
+        <Grid item xs={12}>
+            <h1 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "50px", margin: "0px", padding: "0px",color: "#00539C"}}>{EventData.nameOfActivity}</h1>
+        </Grid>
+        <Grid item xs={12}>
+            <p style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", margin: "0px", padding: "0px"}}>{EventData.description}</p>
+        </Grid>
+        <Grid item xs={6}>
+            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Event Starts From</h4>
+        </Grid>
+        <Grid item xs={6}>
+           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{date_start}</h4>
+        </Grid>
+        <Grid item xs={6}>
+            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Timing</h4>
+        </Grid>
+        <Grid item xs={6}>
+           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{EventData.startTime}</h4>
+        </Grid>
+        <Grid item xs={6}>
+            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Event End On</h4>
+        </Grid>
+        <Grid item xs={6}>
+           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{date_end}</h4>
+        </Grid>
+        <Grid item xs={6}>
+            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Theme of The event</h4>
+        </Grid>
+        <Grid item xs={6}>
+           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{EventData.theme}</h4>
+        </Grid>
+        <Grid item xs={6}>
+            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Duration of the Event</h4>
+        </Grid>
+        <Grid item xs={6}>
+           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{EventData.duration} Hour</h4>
+        </Grid>
+        <Grid item xs={6}>
+            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Venue</h4>
+        </Grid>
+        <Grid item xs={6}>
+           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{EventData.venue}</h4>
+        </Grid>
+    </Grid>
       </Box>
+      <br></br>
+      <Header title="Registered Community Members" subtitle="Members who registered for the Event" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -303,7 +395,7 @@ const EventDetails = () => {
           rows={UserData}
           columns={columns1}
         />
-      <Box display="flex" alignItems="center" mb="20px">
+      <Box display="flex" alignItems="center" pb="40px">
         <Modal
           open={open2}
           onClose={handleClose2}
@@ -349,7 +441,7 @@ const EventDetails = () => {
       </Box>
       <Header title="Assigned Staff" subtitle="Number of staff members" />
       <Box
-        m="40px 0 0 0"
+        m="40px 0 40px 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
