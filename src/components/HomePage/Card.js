@@ -28,14 +28,14 @@ export default function Card(props) {
             </div>
            
             <div style={{marginTop:"10px"}}>
-                <Button onClick={()=>{
+                {/* <Button onClick={()=>{
             navigate("/info", {
               state: {
                 Event_Reg_Id: props.Event_id
               },
             })
-          }}  variant="contained">Info</Button>
-              <Button style={{marginLeft:"10px"}}onClick={() => {
+          }}  variant="contained">Info</Button> */}
+              <Button style={{marginLeft:"0px"}}onClick={() => {
            // console.log(EventName.Event_id);
                 navigate("/Registration", {
                   state: {

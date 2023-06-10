@@ -70,6 +70,7 @@ const CommunityModal = () => {
       .then((response) => {
         const com = response.data;
         updateCommunities(com);
+       
       })
       .catch((error) => {
         console.error("Failed to retrieve staff data:", error);
@@ -186,7 +187,7 @@ const CommunityModal = () => {
     console.log(nameOfActivity)
     for (let index = 0; index < selectedCommunities.length; index++) {
       const element = selectedCommunities[index];
-      myArray.push(element._id)
+      myArray.push(element.name)
     }
     const myArray2 = [];
     for (let index = 0; index < selectedStaffs.length; index++) {
