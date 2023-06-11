@@ -8,9 +8,9 @@ const DashboardBarChart = ({ Score, data }) => {
 	
 	const customData = data.map((item) =>({
 		name: item.name,
-		MPI_Score: item.MPI_Score,
+		MPI_Score: item.MPIscore.length === 0 ? 1 : item.MPIscore[item.MPIscore.length - 1].score,
 	}))
-	console.log(customData);
+	console.log("custom", customData);
 
 	return (
 		<ResponsiveBar

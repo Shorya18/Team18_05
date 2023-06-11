@@ -22,6 +22,7 @@ import {
 	ageVsAttendeesData,
 	MpiVsFamilyBarData,
 } from "../data/dummyData";
+import LineGraph from "../components/graphs/communityMPITrend";
 
 // import Yo from "../yo";
 
@@ -32,8 +33,9 @@ const CommunityProfile = () => {
 	const [familyData, setFamilyData] = useState([]);
 	const { state } = useLocation();
 	const [familyMPI, setfamilyMPI] = useState([]);
+	const [communityMPI, setCommunityMPI] = useState([]);
 	const [barchart, setBarChartValue] = useState(
-		<MpiVsFamilyBarChart Score={familyMPI} data={familyData} />
+		<MpiVsFamilyBarChart Score={familyMPI} data={familyMPI} />
 	);
 
 	// useEffect(() => {
@@ -46,11 +48,17 @@ const CommunityProfile = () => {
 		const data = {
 			community: state.community,
 		};
+		// console.log("statee", state);
 		axios.post("http://localhost:4421/get-communityfamily", data)
 			.then((response) => {
 				const data = response.data;
-				console.log("family", data);
-				setCommunityData(data);
+				const mpiScores = data.map((community) => ({
+					familyId: community.familyId,
+					community: community.community,
+					MPI_score: community.MPIscore.length === 0 ? 1 : community.MPIscore[community.MPIscore.length - 1].score,
+				}));
+				// console.log("family", mpiScores);
+				setCommunityData(mpiScores);
 			})
 			.catch((error) => {
 				console.error(
@@ -59,10 +67,10 @@ const CommunityProfile = () => {
 				);
 			});
 
-		axios.get("http://localhost:4421/details-Event", data)
+		axios.post("http://localhost:4421/details-Event/comwise", data)
 			.then((response) => {
 				const data = response.data;
-				// console.log(data);	
+				// console.log("event", data);	
 				setEventData(data);
 			})
 			.catch((error) => {
@@ -76,12 +84,13 @@ const CommunityProfile = () => {
 			)
 				.then((response) => {
 					const data = response.data;
+					console.log(data);
 					const mpiScores = data.map((community) => ({
 						familyId: community.familyId,
-						MPI_score: community.MPIscore,
+						MPI_score: community.MPIscore.length === 0 ? 1 : community.MPIscore[community.MPIscore.length - 1].score,
 					  }));
+					//   console.log("hello", mpiScores);
 					  setfamilyMPI(mpiScores);
-					//   console.log(mpiScores);
 				})
 				.catch((error) => {
 					console.error(
@@ -89,7 +98,27 @@ const CommunityProfile = () => {
 						error
 					);
 				});
-	}, []);
+				axios
+				.get("http://localhost:4421/details-Community")
+				.then((response) => {
+				  const data = response.data;
+				  console.log(data);
+				  const foundUsers = data.filter(
+					(user) => user.name === state.community
+				  );
+				//   console.log("com", foundUsers)
+				  const y = foundUsers[0].MPIscore.map((item) => item.score);
+				  const x = Array.from({ length: y.length }, (_, i) => i + 1);
+				  const familyId = state.community;
+				  const finalData = [{ x, y,familyId}];
+				  console.log(finalData);
+				  setCommunityMPI(finalData);
+				
+				})
+				.catch((error) => {
+				  console.error("Failed to retrieve Community data:", error);
+				});
+	}, [state.community]);
 	
 	useEffect(() => {
 		setBarChartValue(() => (
@@ -103,32 +132,6 @@ const CommunityProfile = () => {
 
 	const theme = useTheme();
 	const colors = tokens(theme.palette);
-	function exportAsCsv(data, columns) {
-		const csvColumns = columns.map((column) => column.field);
-		const csvData = [
-			csvColumns.join(","),
-			...data.map((row) => {
-				return csvColumns
-					.map((column) => {
-						const value = row[column];
-						if (
-							typeof value ===
-								"string" &&
-							value.includes(",")
-						) {
-							return `"${value}"`;
-						}
-						return value;
-					})
-					.join(",");
-			}),
-		].join("\n");
-
-		const blob = new Blob([csvData], {
-			type: "text/csv;charset=utf-8",
-		});
-		saveAs(blob, "contacts.csv");
-	}
 
 	function CustomToolbar() {
 		return (
@@ -147,7 +150,7 @@ const CommunityProfile = () => {
 			cellClassName: "name-column--cell",
 		},
 		{
-			field: "MPIscore",
+			field: "MPI_score",
 			headerName: "MPI Score",
 			flex: 1,
 		},
@@ -255,6 +258,11 @@ const CommunityProfile = () => {
 							title={`${state.community} Community Profile`}
 							subtitle={`Information of the Families and Events in ${state.community}`}
 						/>
+						<Button variant="contained" color="negative"              onClick={() => {
+                navigate("/dashboard");
+              }}>
+					Back
+					</Button>
 					</Box>
 				
 				{/* FAMILIES */}
@@ -373,7 +381,7 @@ const CommunityProfile = () => {
 									padding: "30px 30px 0 30px",
 								}}
 							>
-								MPI Score Trend
+								MPI Score
 								of different
 								families in{" "}
 								{
@@ -393,12 +401,13 @@ const CommunityProfile = () => {
 								gridRow="span 2"
 								backgroundColor={colors.primary[400]}
 								p="30px"
+								height="400px"
 							>
 								<Typography
 									variant="h5"
 									fontWeight="600"
 								>
-									Families vs Education
+									Community MPI trend
 								</Typography>
 								<Box
 									display="flex"
@@ -407,8 +416,8 @@ const CommunityProfile = () => {
 									mt="25px"
 									height="300px"
 								>
-
-									<PieChart data={mockPieData} />
+									<LineGraph data= {communityMPI}/>
+									{/* <PieChart data={mockPieData} /> */}
 								</Box>
 							</Box>
 					</Box>
@@ -418,7 +427,7 @@ const CommunityProfile = () => {
 					<DataGrid
 						sx={{ mb: "10px" }}
 						rows={communityData}
-						getRowId={(row) => row._id}
+						getRowId={(row) => row.familyId}
 						columns={FamilyDetails}
 						components={{
 							Toolbar: CustomToolbar,
@@ -489,34 +498,7 @@ const CommunityProfile = () => {
 						>
 							EVENTS
 						</Typography>
-						{/* <Box>
-							<Button
-								sx={{
-									backgroundColor:
-										colors
-											.blueAccent[700],
-									color: colors
-										.grey[100],
-									fontSize: "14px",
-									fontWeight: "bold",
-									padding: "10px 20px",
-								}}
-								onClick={() =>
-									exportAsCsv(
-										communityData,
-										EventDetails
-									)
-								}
-							>
-								<DownloadOutlinedIcon
-									sx={{
-										mr: "10px",
-									}}
-								/>
-								Download Event
-								Details
-							</Button>
-						</Box> */}
+					
 					</Box>
 
 					{/* Events Graphs */}

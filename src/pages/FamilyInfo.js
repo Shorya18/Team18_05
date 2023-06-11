@@ -4,7 +4,7 @@ import axios from "axios";
 import { Card, Typography, Box } from "@mui/material";
 import CheckMarkNav from "../components/FamilyInfo/checkMarkNav";
 import { useLocation, useNavigate } from "react-router-dom";
-import LineGraph from "../components/graphs/LineChart";
+import LineGraph from "../components/graphs/FamilyMPITrend";
 
 export default function FamilyInfo() {
   const [individual, setIndividual] = useState([]);
@@ -17,6 +17,7 @@ export default function FamilyInfo() {
     house: false,
     assets: false,
   });
+  const [communityData, setCommunityData] = useState([]);
 
   const { state } = useLocation();
   const obj = state;
@@ -39,6 +40,10 @@ export default function FamilyInfo() {
       house: services.house,
       assets: services.assets,
     };
+    const data1 = {
+			community: obj.communityData,
+		};
+    console.log(obj);
     axios
       .post("http://localhost:4421/add-familydetails", data)
       .then((response) => {
@@ -76,6 +81,29 @@ export default function FamilyInfo() {
       })
       .catch((error) => {
         console.error("Failed to retrieve staff data:", error);
+      });
+
+      axios
+      .post("http://localhost:4421/get-communityfamily", {
+        community: obj.communityData,
+      })
+      .then((response) => {
+        const data = response.data;
+        //console.log(data);
+        console.log("heheh", data)
+        const foundUsers = data.filter(
+          (user) => user.familyId === state.familyId
+        );
+        console.log(data)
+        const y = foundUsers[0].MPIscore.map((item) => item.score);
+        const x = Array.from({ length: y.length }, (_, i) => i + 1);
+        const familyId = state.familyId;
+        const finalData = [{ x, y,familyId}];
+        // console.log("mpi", mpiScores); console.log("index", indexArray);
+        setCommunityData(finalData);
+      })
+      .catch((error) => {
+        console.error("Failed to retrieve Community data:", error);
       });
   }, []);
 
@@ -159,8 +187,8 @@ export default function FamilyInfo() {
             ))}
           </div>
           <div style={{ display: "flex", alignContent: "center" }}>
-            <LineGraph />
-            <LineGraph />
+            <LineGraph data = {communityData} />
+            {/* <LineGraph /> */}
           </div>
         </div>
       )}

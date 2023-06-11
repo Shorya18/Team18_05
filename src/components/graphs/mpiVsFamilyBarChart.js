@@ -5,10 +5,11 @@ import { tokens } from "../../theme";
 const MpiVsFamilyBarChart = ({ data }) => {
 	const theme = useTheme();
 	const colors = tokens(theme.palette);
-
+	console.log(data);
 	return (
 		<ResponsiveBar
 			data={data}
+			// layout='horizontal'
 			theme={{
 				// added
 				axis: {
@@ -41,7 +42,7 @@ const MpiVsFamilyBarChart = ({ data }) => {
 				},
 			}}
 			keys={[
-				"MPI_Score"
+				"MPI_score"
 			]}
 			indexBy="familyId"
 			margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
@@ -73,7 +74,7 @@ const MpiVsFamilyBarChart = ({ data }) => {
 			fill={[
 				{
 					match: {
-						id: 'MPI_Score'
+						id: 'MPI_score'
 					},
 					id: 'lines'
 				},
