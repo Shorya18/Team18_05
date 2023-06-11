@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { formatDate } from "@fullcalendar/core";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -15,26 +14,40 @@ import {
 } from "@mui/material";
 import Header from "../components/Header";
 import { tokens } from "../theme";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette);
   const [currentEvents, setCurrentEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [eventData, setEventData] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+      axios.get("http://localhost:4421/details-Event")
+			.then((response) => {
+        const data = response.data;
+        console.log(data);
+        const dates = data.map((community) => ({
+          id: community._id,
+          title: community.nameOfActivity,
+          date: community.startDate.split("T")[0],
+        }));
+				setEventData(dates);
+        setIsLoading(false);
+			})
+			.catch((error) => {
+				console.error(
+					"Failed to retrieve Community data:",
+					error
+				);
 
+    });
+  }, []);
   const handleDateClick = (selected) => {
-    const title = prompt("Please enter a new title for your event");
-    const calendarApi = selected.view.calendar;
-    calendarApi.unselect();
-
-    if (title) {
-      calendarApi.addEvent({
-        id: `${selected.dateStr}-${title}`,
-        title,
-        start: selected.startStr,
-        end: selected.endStr,
-        allDay: selected.allDay,
-      });
-    }
+      
   };
 
   const handleEventClick = (selected) => {
@@ -48,6 +61,23 @@ const Calendar = () => {
   };
 
   return (
+    <div >
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "200px",
+            width: "100%",
+            fontSize: "20px",
+            fontWeight: "bold",
+            color: "#555",
+          }}
+        >
+          Loading...
+        </div>
+      ) : (
     <Box m="20px">
       <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
 
@@ -108,24 +138,15 @@ const Calendar = () => {
             selectMirror={true}
             dayMaxEvents={true}
             select={handleDateClick}
-            eventClick={handleEventClick}
+            // eventClick={handleEventClick}
             eventsSet={(events) => setCurrentEvents(events)}
-            initialEvents={[
-              {
-                id: "12315",
-                title: "All-day event",
-                date: "2022-09-14",
-              },
-              {
-                id: "5123",
-                title: "Timed event",
-                date: "2022-09-28",
-              },
-            ]}
+            initialEvents={eventData}
           />
         </Box>
       </Box>
     </Box>
+     )}
+     </div>
   );
 };
 
