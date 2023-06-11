@@ -12,12 +12,16 @@ export default function Card(props) {
     
   }else if(props.Theme==="Education 📚"){
     image="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGVkdWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60";
+  }else if(props.Theme === "Celebration 🥳"){
+    image = "https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2VsZWJyYXRpb258ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60";
+  }else if(props.Theme === "Skill Training 🤖"){
+    image = "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2tpbGwlMjB0cmFpbmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
   }else{
     image="https://www.cms.gov/sites/default/files/2022-10/hand%20and%20cross.png";
   }
   const navigate = useNavigate();
   return (
-    <div style={{display:"flex",flexDirection:"column",justifyContent:"center",width:"390px",height:"400px",boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)"}}>
+    <div style={{marginBottom: "20px",  display:"flex",flexDirection:"column",justifyContent:"center",width:"390px",height:"400px",boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)"}}>
         <div><img style={{width:"350px",height:"200px",margin:"auto",display:"block"}}src={image}/></div>
         <div style={{display:"flex",flexDirection:"column",marginLeft:"20px",marginRight:"20px"}}>
             <div style={{marginTop:"10px"}}>{props.EventName}</div>
