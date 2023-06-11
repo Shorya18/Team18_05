@@ -37,7 +37,7 @@ export default function DashboardCard(props) {
       }
     >
       <CardContent sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%'}}>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h4" component="div">
             <b>{props.communityName}</b>
             <Typography variant="h5" color="text.primary">
               {props.description}
@@ -45,7 +45,7 @@ export default function DashboardCard(props) {
           </Typography>
 
         <Typography variant="h4" color="text.primary">
-            MPI: <span>{mpiscore}</span>
+            MPI: <span >{mpiscore}</span>
         </Typography>
       </CardContent>
       <CardActions>

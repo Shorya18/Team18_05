@@ -109,9 +109,7 @@ const Sidebar = () => {
                 >
                   Tiny Miracles
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Head of Business Operations
-                </Typography>
+
               </Box>
             </Box>
           )}

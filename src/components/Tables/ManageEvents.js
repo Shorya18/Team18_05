@@ -213,7 +213,7 @@ const ManageEvent = () => {
       <Box display="flex" alignItems="center" sx={{width: "100%"}}>
         <div alignItems="center" style={{width: "50%"}}>
           <h1 style={{color: "#00539C", fontFamily: "sans-serif", textAlign: "center", fontSize: "50px", margin:"0px"}}>Event Manager</h1>
-          <h2 style={{color: "#EEA47F", fontFamily: "sans-serif",textAlign: "center"}}>Welcome To Event Manager😄</h2>
+          <h2 style={{color: "#EEA47F", fontFamily: "sans-serif",textAlign: "center"}}>Welcome To Event Manager</h2>
         </div>
         <div>
           <div style={{margin: "20px", border: "solid black", padding: "20px", borderRadius: "20px", boxShadow: "5px 5px 10px gray"}}>
@@ -251,6 +251,7 @@ const ManageEvent = () => {
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
+            font: '15px',
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
@@ -263,7 +264,7 @@ const ManageEvent = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
+            backgroundColor: '#FFFFFF',
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
@@ -290,6 +291,7 @@ const ManageEvent = () => {
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
+            font: '15px',
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
@@ -302,7 +304,7 @@ const ManageEvent = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
+            backgroundColor: '#FFFFFF',
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",

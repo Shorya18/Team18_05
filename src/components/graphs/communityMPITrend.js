@@ -10,10 +10,23 @@ const LineGraph = ({data}) => {
           // y: [0.4444444444444444, 0.666]
 //     },
 //   ];
-    console.log("line", data);
+const monthNames = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+];
+const transformedData = data.map(item => {
+  const x = item.x.map(dateString => {
+    const monthIndex = parseInt(dateString.split("-")[1]) - 1;
+    const monthName = monthNames[monthIndex];
+    return monthName;
+  });
+
+  return { ...item, x };
+});
+    console.log("line", transformedData);
   // Layout configuration
   const layout = {
-    title: 'MPI IMPROVEMENTS',
+    title: 'MPI TREND',
     xaxis: {
       title: 'Months',
     },
@@ -23,7 +36,7 @@ const LineGraph = ({data}) => {
     },
   };
 
-  return <Plot data={data} layout={layout} style={{width:"320px", height: "300px"}}/>;
+  return <Plot data={transformedData} layout={layout} style={{width:"320px", height: "300px"}}/>;
 };
 
 export default LineGraph;

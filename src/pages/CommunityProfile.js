@@ -108,7 +108,7 @@ const CommunityProfile = () => {
 				  );
 				//   console.log("com", foundUsers)
 				  const y = foundUsers[0].MPIscore.map((item) => item.score);
-				  const x = Array.from({ length: y.length }, (_, i) => i + 1);
+				  const x = foundUsers[0].MPIscore.map((item) => item.date.split("T")[0]);
 				  const familyId = state.community;
 				  const finalData = [{ x, y,familyId}];
 				  console.log(finalData);
@@ -290,8 +290,7 @@ const CommunityProfile = () => {
 						"& .MuiDataGrid-virtualScroller":
 							{
 								backgroundColor:
-									colors
-										.primary[400],
+									'#FFFFFF',
 							},
 						"& .MuiDataGrid-footerContainer":
 							{
@@ -320,10 +319,7 @@ const CommunityProfile = () => {
 						<Typography
 							variant="h3"
 							fontWeight="600"
-							color={
-								colors
-									.greenAccent[400]
-							}
+							color=''
 						>
 							FAMILIES
 						</Typography>
@@ -375,7 +371,7 @@ const CommunityProfile = () => {
 							height="400px"
 						>
 							<Typography
-								variant="h5"
+								variant="h4"
 								fontWeight="600"
 								sx={{
 									padding: "30px 30px 0 30px",
@@ -404,7 +400,7 @@ const CommunityProfile = () => {
 								height="400px"
 							>
 								<Typography
-									variant="h5"
+									variant="h4"
 									fontWeight="600"
 								>
 									Community MPI trend
@@ -462,8 +458,7 @@ const CommunityProfile = () => {
 						"& .MuiDataGrid-virtualScroller":
 							{
 								backgroundColor:
-									colors
-										.primary[400],
+									'#FFFFFF',
 							},
 						"& .MuiDataGrid-footerContainer":
 							{
@@ -491,10 +486,7 @@ const CommunityProfile = () => {
 						<Typography
 							variant="h3"
 							fontWeight="600"
-							color={
-								colors
-									.greenAccent[400]
-							}
+							color=''
 						>
 							EVENTS
 						</Typography>

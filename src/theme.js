@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { createTheme } from "@mui/material/styles";
+// import url('https://fonts.googleapis.com/css2?family=Bayon&family=Montserrat:wght@600&display=swap');
 
-// import "./App.css";
+import "./theme.css";
 
 export const tokens = () => ({
         grey: {
@@ -19,7 +20,7 @@ export const tokens = () => ({
           100: "#040509",
           200: "#080b12",
           300: "#0c101b",
-          400: "#f2f0f0", // manually changed
+          400: "#b5e2e1", // manually changed
           500: "#141b2d",
           600: "#1F2A40",
           700: "#727681",
@@ -59,6 +60,53 @@ export const tokens = () => ({
           800: "#c3c6fd",
           900: "#e1e2fe",
         },
+          yellow: {
+          100: "#fefacc",
+          200: "#fdf499",
+          300: "#fdef66",
+          400: "#fce933",
+          500: "#fbe400",
+          600: "#c9b600",
+          700: "#978900",
+          800: "#645b00",
+          900: "#322e00"
+        },
+        red: {
+          100: "#fcdcdf",
+          200: "#f9bac0",
+          300: "#f597a0",
+          400: "#f27581",
+          500: "#ef5261",
+          600: "#bf424e",
+          700: "#8f313a",
+          800: "#602127",
+          900: "#301013"
+},
+
+gray: {
+    100: "#e6f5f5",
+    200: "#cdeceb",
+    300: "#b5e2e1",
+    400: "#9cd9d7",
+    500: "#83cfcd",
+    600: "#69a6a4",
+    700: "#4f7c7b",
+    800: "#345352",
+    900: "#1a2929"
+},
+
+yellow: {
+    100: "#fefacc",
+    200: "#fdf499",
+    300: "#fdef66",
+    400: "#fce933",
+    500: "#fbe400",
+    600: "#c9b600",
+    700: "#978900",
+    800: "#645b00",
+    900: "#322e00"
+},
+
       });
 
 // mui theme settings
@@ -78,7 +126,7 @@ export const themeSettings = () => {
               light: colors.grey[100],
             },
             background: {
-              default: "#fcfcfc",
+              default: "#FFFFFF",
             },
             negative: {
               main: colors.redAccent[500],
@@ -86,21 +134,21 @@ export const themeSettings = () => {
     },
     typography: {
       fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 12,
+      fontSize: 14,
       h1: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontFamily: ['Bayon', "sans-serif"].join(","),
         fontSize: 40,
       },
       h2: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 32,
+        fontFamily: ['Bayon', "sans-serif"].join(","),
+        fontSize: 36,
       },
       h3: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontFamily: ["Bayon", "sans-serif"].join(","),
         fontSize: 24,
       },
       h4: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontFamily: ["Bayon", "sans-serif"].join(","),
         fontSize: 20,
       },
       h5: {
