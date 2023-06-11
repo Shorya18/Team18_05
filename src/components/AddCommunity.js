@@ -71,9 +71,14 @@ const AddCommunity = () => {
               </Alert>
           </Snackbar>)}
 
-      <Header title="Create Community" subtitle="Create a New Community" />
+          <Box
+            style={{ width: '100%'}}
 
+            >
+                  <Header title="Create Community" subtitle="Create a New Community" />
+            </Box>
       <Formik
+      
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
         validationSchema={checkoutSchema}
@@ -131,13 +136,17 @@ const AddCommunity = () => {
                 onChange={handleChange}
                 value={values.startDate}
                 name="startDate"
+                backgroundColor="#f0f0f0"
                 error={!!touched.startDate && !!errors.startDate}
                 helperText={touched.startDate && errors.startDate}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
+              <Button type="submit" color="secondary" variant="contained"
+              style={{ background: '#fbe400', color: '#000000'}}
+
+              >
                 Create New Community
               </Button>
             </Box>

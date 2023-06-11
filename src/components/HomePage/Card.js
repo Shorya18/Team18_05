@@ -35,7 +35,7 @@ export default function Card(props) {
               },
             })
           }}  variant="contained">Info</Button> */}
-              <Button style={{marginLeft:"0px"}}onClick={() => {
+              <Button style={{marginLeft:"0px"}} onClick={() => {
            // console.log(EventName.Event_id);
                 navigate("/Registration", {
                   state: {

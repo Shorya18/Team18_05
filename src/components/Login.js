@@ -98,6 +98,7 @@ function Login() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
+        backgroundColor: '#FFFFFF'
       }}
     >
 

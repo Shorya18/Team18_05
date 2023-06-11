@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createTheme } from "@mui/material/styles";
-// import url('https://fonts.googleapis.com/css2?family=Bayon&family=Montserrat:wght@600&display=swap');
+// import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat:wght@600&display=swap');
 
 import "./theme.css";
 
@@ -20,7 +20,7 @@ export const tokens = () => ({
           100: "#040509",
           200: "#080b12",
           300: "#0c101b",
-          400: "#b5e2e1", // manually changed
+          400: "#fbe400", // manually changed
           500: "#141b2d",
           600: "#1F2A40",
           700: "#727681",
@@ -54,9 +54,9 @@ export const tokens = () => ({
           200: "#2a2d64",
           300: "#3e4396",
           400: "#535ac8",
-          500: "#6870fa",
+          500: "#FFFFFF",
           600: "#868dfb",
-          700: "#a4a9fc",
+          700: '#83cfcd',
           800: "#c3c6fd",
           900: "#e1e2fe",
         },
@@ -136,19 +136,19 @@ export const themeSettings = () => {
       fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
       fontSize: 14,
       h1: {
-        fontFamily: ['Bayon', "sans-serif"].join(","),
+        fontFamily: ['Merriweather', "sans-serif"].join(","),
         fontSize: 40,
       },
       h2: {
-        fontFamily: ['Bayon', "sans-serif"].join(","),
+        fontFamily: ['Merriweather', "sans-serif"].join(","),
         fontSize: 36,
       },
       h3: {
-        fontFamily: ["Bayon", "sans-serif"].join(","),
+        fontFamily: ["Merriweather", "sans-serif"].join(","),
         fontSize: 24,
       },
       h4: {
-        fontFamily: ["Bayon", "sans-serif"].join(","),
+        fontFamily: ["Merriweather", "sans-serif"].join(","),
         fontSize: 20,
       },
       h5: {

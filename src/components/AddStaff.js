@@ -97,6 +97,8 @@ const AddStaff = () => {
         <Grid>
           <Paper elevation={10} style={paperStyle}>
             <button
+              style={{ background: '#fbe400', color: '#000000'}}
+
               onClick={() => {
                 navigate("/team");
               }}

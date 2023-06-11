@@ -1,11 +1,16 @@
 import React from "react";
 import { Box, useTheme, Button, Modal, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 
 const DeleteEvent = () => {
 	const [EventData, setEventData] = useState([]);
@@ -24,6 +29,15 @@ const DeleteEvent = () => {
 				);
 			});
 	}, []);
+
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
 
 	useEffect(() => {
 		console.log(EventData);
@@ -108,7 +122,8 @@ const DeleteEvent = () => {
 
 	return (
 		<Box m="20px">
-			<Box display="flex" alignItems="center" mb="20px">
+			<Box display="flex" alignItems="center" mb="20px"
+			style={{ }}>
 				<Header
 					title="Manage Events"
 					subtitle="All Event Details"
@@ -131,6 +146,8 @@ const DeleteEvent = () => {
           </Box> */}
 					<Box>
 						<Button
+              style={{ background: '#fbe400', color: '#000000'}}
+
 							onClick={() => {
 								navigate(
 									"/manage-event"
@@ -146,6 +163,7 @@ const DeleteEvent = () => {
 				</Box>
 			</Box>
 			<Box
+			
 				m="40px 0 0 0"
 				height="75vh"
 				sx={{
@@ -161,7 +179,7 @@ const DeleteEvent = () => {
 					},
 					"& .MuiDataGrid-columnHeaders": {
 						backgroundColor:
-							colors.blueAccent[700],
+							'#83cfcd',
 						borderBottom: "none",
 					},
 					"& .MuiDataGrid-virtualScroller": {
@@ -170,7 +188,7 @@ const DeleteEvent = () => {
 					"& .MuiDataGrid-footerContainer": {
 						borderTop: "none",
 						backgroundColor:
-							colors.blueAccent[700],
+							'#83cfcd',
 					},
 					"& .MuiCheckbox-root": {
 						color: `${colors.greenAccent[200]} !important`,
@@ -182,6 +200,9 @@ const DeleteEvent = () => {
 					getRowId={(row) => row._id}
 					rows={EventData}
 					columns={columns}
+					components={{
+						Toolbar: CustomToolbar,
+					}}
 				/>
 			</Box>
 		</Box>

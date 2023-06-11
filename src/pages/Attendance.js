@@ -3,7 +3,12 @@ import { Box, useTheme, Button, Modal, Typography } from "@mui/material";
 import { tokens } from "../theme";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -98,12 +103,22 @@ export default function Attendance() {
 			),
 		},
 	];
+
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
 	return (
 		<div style={{ margin: "20px 100px 100px 100px" }}>
 			<div
 				style={{
 					display: "flex",
 					justifyContent: "space-between",
+           
 				}}
 			>
 				<Header
@@ -139,6 +154,7 @@ export default function Attendance() {
 				<Box
 					m="40px 0 0 0"
 					height="75vh"
+          
 					sx={{
 						"& .MuiDataGrid-root": {
 							border: "none",
@@ -174,6 +190,10 @@ export default function Attendance() {
 						"& .MuiCheckbox-root": {
 							color: `${colors.greenAccent[200]} !important`,
 						},
+						"& .MuiDataGrid-toolbarContainer .MuiButton-text":
+						{
+							color: `${colors.grey[100]} !important`,
+						},
 					}}
 				>
 					<DataGrid
@@ -181,6 +201,10 @@ export default function Attendance() {
 						getRowId={(row) => row._id}
 						rows={UserData}
 						columns={columns1}
+						components={{
+							Toolbar: CustomToolbar,
+						}}
+						
 					/>
 				</Box>
 			</div>

@@ -191,8 +191,14 @@ export default function BasicTextFields() {
             Personal Details
           </Typography>
           <div>
-          <Button sx={{mr:"10px"}}variant="contained" onClick={handleSubmit}>Add Member</Button>
-          <Button variant="contained" onClick={handleBack}>Back</Button>
+          <Button sx={{mr:"10px"}}
+                style={{ background: '#fbe400', color: '#000000'}}
+          
+          variant="contained" onClick={handleSubmit}>Add Member</Button>
+          <Button 
+              style={{ background: '#fff', color: '#000000'}}
+          
+          variant="contained" onClick={handleBack}>Back</Button>
           </div>
         </div>
         <div

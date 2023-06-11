@@ -1,35 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./css/adduser.css";
-import { Box, Snackbar, Alert, AlertTitle  } from "@mui/material";
+import React, { useState } from "react";
+import Box from "@mui/material/Box";
+import { TextField, Typography, MenuItem, Button, Paper } from "@mui/material/";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const AddUser = () => {
+export default function BasicTextFields() {
   const { state } = useLocation();
   console.log(state);
-
-  const [openAlert, setAlertOpen] = useState(false);
-  const [message, setAlertMsg] = useState("");
-  const [alertType, setAlertType] = useState("");
-  
-  const openAlertToast = () => {
-    setAlertOpen(true);
-  };
-
-  const handleAlertClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setAlertType('');
-    setAlertMsg('');
-    setAlertOpen(false);
-  };
-
-  useEffect(() => {
-    openAlertToast();
-
-  }, [message, alertType]);
-
   const [name, setName] = useState("");
   const [mobNo, setMobNo] = useState("");
   const [adharCard, setAdharCard] = useState("");
@@ -60,9 +37,9 @@ const AddUser = () => {
     const { value } = e.target;
     const updatedHelpNeeded = [...helpNeeded];
     updatedHelpNeeded[index] = value;
+
     setHelpNeeded(updatedHelpNeeded);
   };
-
   const handleDocumentChange = (e, index) => {
     const { name, value } = e.target;
     const updatedDocuments = [...documents];
@@ -77,24 +54,18 @@ const AddUser = () => {
     setMedicalHistory(updatedMedicalHistory);
   };
 
-  const addHelpNeededField = () => {
-    setHelpNeeded([...helpNeeded, ""]);
-  };
-
-  const addDocumentField = () => {
-    setDocuments([
-      ...documents,
-      { name: "", idNo: "", dateOfIssue: "", dateOfExpiry: "" },
-    ]);
-  };
-
   const addMedicalHistoryField = () => {
     setMedicalHistory([
       ...medicalHistory,
       { lastMedicalCheckup: "", healthIssues: [] },
     ]);
   };
-
+  const addDocumentField = () => {
+    setDocuments([
+      ...documents,
+      { name: "", idNo: "", dateOfIssue: "", dateOfExpiry: "" },
+    ]);
+  };
   const calculateAge = (dateOfBirth) => {
     const today = new Date();
     const dob = new Date(dateOfBirth);
@@ -108,7 +79,15 @@ const AddUser = () => {
 
     return age;
   };
-
+  const handleBack = async (e) => {
+    e.preventDefault();
+    navigate("/family-info", {
+      state: {
+        communityData: state.communityData,
+        familyId: state.familyId,
+      },
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -141,12 +120,13 @@ const AddUser = () => {
       );
 
       console.log(response.data);
-      setAlertType('success');
-      setAlertMsg("User details added successfully!");
-      navigate("/manage-user"); // Handle the response as needed
+      navigate("/family-info", {
+        state: {
+          communityData: state.communityData,
+          familyId: state.familyId,
+        },
+      }); // Handle the response as needed
     } catch (error) {
-      setAlertType('error');
-      setAlertMsg("There was some issue in processing your request. Please try again later.");
       console.error(error); // Handle error if request fails
     }
 
@@ -168,100 +148,157 @@ const AddUser = () => {
     setAge(0);
     // Reset other fields
   };
-
+  const Gender = [
+    { value: "1", label: "Male" },
+    { value: "2", label: "Female" },
+    { value: "3", label: "Others" },
+  ];
+  const Education1 = [
+    { value: "1", label: "Schooling" },
+    { value: "2", label: "Not Schooling" },
+  ];
+  const Education2 = [
+    { value: "1", label: "None" },
+    { value: "2", label: "5th pass" },
+    { value: "3", label: "Middle School" },
+    { value: "4", label: "High School" },
+  ];
+  const Help = [
+    { value: "1", label: "Health Related" },
+    { value: "2", label: "Education Related" },
+    { value: "3", label: "Social Awareness Related" },
+    { value: "4", label: "No Help Needed" },
+  ];
+  const Employment = [
+    { value: "1", label: "Not Employeed" },
+    { value: "2", label: "Employeed" },
+  ];
   return (
-    <Box className="addusr_box">
-
-        {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
-            <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
-                <AlertTitle>{alertType}</AlertTitle>
-                  {message}
-            </Alert>
-        </Snackbar>)}
-
-      <form onSubmit={handleSubmit}>
-        <h3>Personal Details:</h3>
-        <div className="grp-1">
-          <div className="inp_div">
-            <label>Name:</label>
-            <input
-              className="inp_box"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="inp_div">
-            <label>Mobile Number:</label>
-            <input
-              className="inp_box"
-              type="text"
-              value={mobNo}
-              onChange={(e) => setMobNo(e.target.value)}
-            />
-          </div>
-
-          <div className="inp_div">
-            <label>Community:</label>
-            <input
-              className="inp_box"
-              type="text"
-              value={community}
-              onChange={(e) => setCommunity(e.target.value)}
-              disabled
-              required
-            />
+    <Box
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+      component="form"
+      sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
+      noValidate
+      autoComplete="off"
+    >
+      <div
+        style={{
+          width: "44%",
+          marginLeft: "300px",
+          padding: "20px",
+          backgroundColor: "#fff",
+          boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.3)",
+        }}
+      >
+        <div
+          style={{
+            paddingBottom: "30px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="h5" gutterBottom>
+            Personal Details
+          </Typography>
+          <div>
+            <Button
+              sx={{ mr: "10px" }}
+              variant="contained"
+              onClick={handleSubmit}
+            >
+              Add Member
+            </Button>
+            <Button variant="contained" onClick={handleBack}>
+              Back
+            </Button>
           </div>
         </div>
-        <div className="grp-2">
-          <div className="inp_div">
-            <label>Family ID:</label>
-            <input
-              className="inp_box"
-              type="text"
-              value={familyId}
-              onChange={(e) => setFamilyId(e.target.value)}
-              disabled
-            />
-          </div>
-          <div>
-            <div className="inp_div">
-              <label>Gender:</label>
-              <input
-                className="inp_box"
-                type="text"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-              />
-            </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: "20px",
+          }}
+        >
+          <TextField
+            required
+            sx={{ width: "200px" }}
+            id="outlined-required"
+            label="Member Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-            <div className="inp_div">
-              <label>Date of Birth:</label>
-              <input
-                className="inp_box"
-                type="date"
-                value={dateOfBirth}
-                onChange={(e) => {
-                  setDateOfBirth(e.target.value);
-                  const age = calculateAge(dateOfBirth);
-                  setAge(age);
-                }}
-              />
-            </div>
-            <div className="inp_div">
-              <label>Age:</label>
-              <input
-                className="inp_box"
-                type="Number"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                disabled
-              />
-            </div>
-          </div>
-
-          <div className="inp_div">
+          <TextField
+            sx={{ width: "200px" }}
+            id="outlined-required"
+            label="Phone Number"
+            value={mobNo}
+            onChange={(e) => setMobNo(e.target.value)}
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: "20px",
+          }}
+        >
+          <TextField
+            required
+            sx={{ width: "200px" }}
+            id="outlined-required"
+            label="Community"
+            value={community}
+            onChange={(e) => setCommunity(e.target.value)}
+            disabled
+          />
+          <TextField
+            required
+            sx={{ width: "200px" }}
+            id="outlined-required"
+            label="Family ID"
+            value={familyId}
+            onChange={(e) => setFamilyId(e.target.value)}
+            disabled
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: "20px",
+          }}
+        >
+          <TextField
+            id="outlined-select-currency"
+            sx={{ width: "200px" }}
+            select
+            label="Gender"
+            onChange={(e) => {
+              if (e.target.value === "1") {
+                setGender("Male");
+              } else if (e.target.value === "2") {
+                setGender("Female");
+              } else {
+                setGender("Other");
+              }
+            }}
+          >
+            {Gender.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <label>
               <input
                 type="checkbox"
@@ -273,221 +310,300 @@ const AddUser = () => {
               Do you have an Aadhar Card?
             </label>
             <br />
-
             {adharCheck && (
-              <div>
-                <label htmlFor="aadharNumber">Aadhar Number:</label>
-                <input
-                  type="text"
-                  id="aadharNumber"
-                  value={adharCard}
-                  onChange={(e) => {
-                    setAdharCard(e.target.value);
-                  }}
-                  required
-                />
-              </div>
+              <TextField
+                required
+                sx={{ width: "200px" }}
+                id="outlined-required"
+                label="Adhar Card ID"
+                value={adharCard}
+                onChange={(e) => {
+                  setAdharCard(e.target.value);
+                }}
+              />
             )}
           </div>
         </div>
-        <div className="inp_div">
-          <h3>Family Details:</h3>
-        </div>
-        <div className="grp-1">
-          {age > 18 && (
-            <div className="inp_div">
-              <label>Income:</label>
-              <input
-                className="inp_box"
-                type="text"
-                value={income}
-                onChange={(e) => setIncome(e.target.value)}
-              />
-            </div>
-          )}
-
-          <div className="inp_div">
-            <label id="label_ed">Education/Qualification: </label>
-            {age <= 18 ? (
-              <select
-                className="select_ed"
-                value={education}
-                onChange={(e) => setEducation(e.target.value)}
-              >
-                <option value=""> Select education level</option>
-                <option value="Schooling"> Schooling</option>
-                <option value="Not in school"> Not in school</option>
-              </select>
-            ) : (
-              <select
-                value={education}
-                onChange={(e) => setEducation(e.target.value)}
-              >
-                <option value=""> Select education level</option>
-                <option value="5th pass"> 5th pass</option>
-                <option value="Not 5th pass"> Not 5th pass</option>
-              </select>
-            )}
-          </div>
-        </div>
-        <div className="inp_div">
-          <h3>Help Needed:</h3>
-          {helpNeeded.map((help, index) => (
-            <div key={index}>
-              <input
-                className="inp_box2 help_div"
-                type="text"
-                value={help}
-                onChange={(e) => handleHelpNeededChange(e, index)}
-              />
-            </div>
-          ))}
-          <button
-            style={{
-              background: "lightblue",
-              color: "black",
-              padding: "8px",
-              margin: "5px",
-              borderRadius: "5px",
-              border: "1px solid silver",
-              cursor: "pointer",
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: "20px",
+          }}
+        >
+          <TextField
+            label="Date of Birth"
+            type="date"
+            sx={{ width: "200px" }}
+            InputLabelProps={{
+              shrink: true,
             }}
-            type="button"
-            onClick={addHelpNeededField}
-          >
-            Add Help Needed Field
-          </button>
+            value={dateOfBirth}
+            onChange={(e) => {
+              setDateOfBirth(e.target.value);
+              const age = calculateAge(dateOfBirth);
+              setAge(age);
+            }}
+          />
+          <TextField
+            required
+            sx={{ width: "200px" }}
+            id="outlined-required"
+            label="Age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            disabled
+          />
         </div>
-        <div className="inp_div">
-          <h3>Documents:</h3>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: "20px",
+          }}
+        >
+          {age > 18 ? (
+            <TextField
+              id="outlined-select-currency"
+              sx={{ width: "200px" }}
+              select
+              label="Education"
+              onChange={(e) => {
+                if (e.target.value === "1") {
+                  setEducation("Not 5th pass");
+                } else if (e.target.value === "2") {
+                  setEducation("5th Pass");
+                } else {
+                  setEducation("5th Pass");
+                }
+              }}
+            >
+              {Education2.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          ) : (
+            <TextField
+              id="outlined-select-currency"
+              sx={{ width: "200px" }}
+              select
+              label="Education"
+              onChange={(e) => {
+                if (e.target.value === "1") {
+                  setEducation("Schooling");
+                } else {
+                  setEducation("Not in school");
+                }
+              }}
+            >
+              {Education1.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+          <TextField
+            id="outlined-select-currency"
+            sx={{ width: "200px" }}
+            select
+            label="Help Needed?"
+            onChange={(e) => {
+              if (e.target.value === "1") {
+                setHelpNeeded("Health Related");
+              } else if (e.target.value === "2") {
+                setHelpNeeded("Education Related");
+              } else if (e.target.value === "3") {
+                setHelpNeeded("Social Awareness Related");
+              } else {
+                setHelpNeeded("No Help Needed");
+              }
+            }}
+          >
+            {Help.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </div>
+        {age > 18 && (
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-between",
+              marginBottom: "20px",
+            }}
+          >
+            <TextField
+              required
+              sx={{ width: "200px" }}
+              id="outlined-required"
+              label="Income:"
+              value={income}
+              onChange={(e) => setIncome(e.target.value)}
+            />
+            <TextField
+              id="outlined-select-currency"
+              sx={{ width: "200px" }}
+              select
+              label="Employment Status"
+              onChange={(e) => {
+                if (e.target.value === "1") {
+                  setEmploymentStatus("Not Employeed");
+                } else if (e.target.value === "2") {
+                  setEmploymentStatus("Employeed");
+                }
+              }}
+            >
+              {Employment.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+        )}
+        <div style={{ paddingBottom: "30px" }}>
+          <Typography variant="h5" gutterBottom>
+            Documents Details
+          </Typography>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: "20px",
+          }}
+        >
           {documents.map((document, index) => (
-            <div className="doc_box" key={index}>
-              <div className="grp-1">
-                <label>Document Name:</label>
-                <input
-                  className="inp_box doc_inp"
+            <div key={index}>
+              <div
+                style={{
+                  display: "flex",
+
+                  justifyContent: "space-between",
+                  marginBottom: "20px",
+                }}
+              >
+                <TextField
+                  required
+                  sx={{ width: "200px" }}
+                  id="outlined-required"
+                  label="Document Name"
                   type="text"
                   name="name"
                   value={document.name}
                   onChange={(e) => handleDocumentChange(e, index)}
                 />
-                <label>Document ID No:</label>
-                <input
-                  className="inp_box doc_inp"
+                <TextField
+                  required
+                  sx={{ width: "200px" }}
+                  id="outlined-required"
+                  label="Document ID No:"
                   type="text"
                   name="idNo"
                   value={document.idNo}
                   onChange={(e) => handleDocumentChange(e, index)}
                 />
               </div>
-              <div className="grp-2">
-                <label>Date of Issue:</label>
-                <input
-                  className="inp_box doc_inp2"
+              <div
+                style={{
+                  display: "flex",
+
+                  justifyContent: "space-between",
+                  marginBottom: "20px",
+                }}
+              >
+                <TextField
+                  label="Date of Issue:"
                   type="date"
+                  sx={{ width: "200px" }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   name="dateOfIssue"
                   value={document.dateOfIssue}
                   onChange={(e) => handleDocumentChange(e, index)}
                 />
-                <label>Date of Expiry:</label>
-                <input
-                  className="inp_box doc_inp2"
+                <TextField
+                  label="Date of Expiry:"
                   type="date"
                   name="dateOfExpiry"
+                  sx={{ width: "200px" }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   value={document.dateOfExpiry}
                   onChange={(e) => handleDocumentChange(e, index)}
                 />
               </div>
             </div>
           ))}
-          <button
-            style={{
-              background: "snow",
-              color: "black",
-              padding: "8px",
-              margin: "5px",
-              borderRadius: "5px",
-              border: "1px solid silver",
-              cursor: "pointer",
-            }}
-            type="button"
-            onClick={addDocumentField}
-          >
+          <Button variant="contained" type="button" onClick={addDocumentField}>
             Add Document Field
-          </button>
+          </Button>
         </div>
-
-        <div className="inp_div">
-          <h3>Medical History:</h3>
-          {medicalHistory.map((history, index) => (
-            <div className="medical_div" key={index}>
-              <label>Last Medical Checkup:</label>
-              <input
-                className="inp_box"
-                style={{ marginRight: "10px" }}
-                type="date"
-                name="lastMedicalCheckup"
-                value={history.lastMedicalCheckup}
-                onChange={(e) => handleMedicalHistoryChange(e, index)}
-              />
-              <label>Health Issues:</label>
-              <input
-                className="inp_box"
-                type="text"
-                name="healthIssues"
-                value={history.healthIssues}
-                onChange={(e) => handleMedicalHistoryChange(e, index)}
-              />
-            </div>
-          ))}
-          <button
+        <div style={{ paddingBottom: "30px" }}>
+          <Typography variant="h5" gutterBottom>
+            Medical History
+          </Typography>
+          <div
             style={{
-              background: "floralwhite",
-              color: "black",
-              padding: "8px",
-              margin: "5px",
-              borderRadius: "5px",
-              border: "1px solid silver",
-              cursor: "pointer",
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              justifyContent: "space-between",
+              marginBottom: "20px",
             }}
-            type="button"
-            onClick={addMedicalHistoryField}
           >
-            Add Medical History Field
-          </button>
-        </div>
-        {age >= 18 && (
-          <div className="inp_div">
-            <label>Employment Status: </label>
-            <select
-              className="select_ed"
-              value={employmentStatus}
-              onChange={(e) => setEmploymentStatus(e.target.value)}
+            {medicalHistory.map((history, index) => (
+              <div
+                style={{
+                  display: "flex",
+
+                  justifyContent: "space-between",
+                  marginBottom: "20px",
+                }}
+              >
+                <TextField
+                  required
+                  sx={{ width: "200px" }}
+                  id="outlined-required"
+                  value={history.lastMedicalCheckup}
+                  type="date"
+                  name="lastMedicalCheckup"
+                  onChange={(e) => handleMedicalHistoryChange(e, index)}
+                />
+                <TextField
+                  required
+                  sx={{ width: "200px" }}
+                  id="outlined-required"
+                  label="Health Issues:"
+                  value={history.healthIssues}
+                  type="text"
+                  name="healthIssues"
+                  onChange={(e) => handleMedicalHistoryChange(e, index)}
+                />
+              </div>
+            ))}
+            <Button
+              variant="contained"
+              type="button"
+              onClick={addMedicalHistoryField}
             >
-              <option value=""> Employment status </option>
-              <option value="Employed">Employed</option>
-              <option value="Not employed">Not employed</option>
-            </select>
+              Add Medical History Field
+            </Button>
           </div>
-        )}
-        {/* Add other form fields here */}
-        <button
-          style={{
-            background: "forestgreen",
-            color: "white",
-            padding: "8px",
-            margin: "5px",
-            borderRadius: "5px",
-            border: "none",
-            cursor: "pointer",
-          }}
-          type="submit"
-        >
-          + Add User
-        </button>
-      </form>
+        </div>
+      </div>
     </Box>
   );
-};
-
-export default AddUser;
+}

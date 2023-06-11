@@ -58,7 +58,7 @@ const CheckMarkNav = ({ services, handleCheckboxChange, handleSubmit,state}) => 
           label="House"
         />
 
-        <FormControlLabel
+        {/* <FormControlLabel
           style={{display:'block'}}
           control={<Checkbox
             name="assets"
@@ -66,9 +66,12 @@ const CheckMarkNav = ({ services, handleCheckboxChange, handleSubmit,state}) => 
             onChange={handleCheckboxChange}
           />}
           label="Assets"
-        />
+        /> */}
 
-        <Button style={{margin:"10px 0"}} variant="contained" color="primary" onClick={handleSubmit}>
+        <Button
+              style={{ margin:"10px 0", background: '#fbe400', color: '#000000'}}
+        
+        variant="contained" color="primary" onClick={handleSubmit}>
           Submit
         </Button>
       </div>

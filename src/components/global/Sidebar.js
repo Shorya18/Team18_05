@@ -49,11 +49,19 @@ const Sidebar = () => {
           padding: "5px 35px 5px 20px !important",
         },
         "& .pro-inner-item:hover": {
-          color: "#868dfb !important",
+          color: "#ef5261 !important",
+          fontSize: "16px !important" ,
+          fontWeight: "bold",
         },
         "& .pro-menu-item.active": {
-          color: "#6870fa !important",
+          color: "#ef5261 !important",
+          fontSize: "16px !important" ,
+          fontWeight: "bold",
         },
+        "& .pro-item-content p": {
+          fontSize: '18px',
+          fontWeight: '800'
+        } 
       }}
     >
       <ProSidebar collapsed={isCollapsed}>
@@ -118,7 +126,7 @@ const Sidebar = () => {
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box >
             <Item
               title="Dashboard"
               to="/dashboard"

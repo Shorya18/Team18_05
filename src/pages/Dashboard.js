@@ -13,7 +13,6 @@ import {
 	GridToolbarContainer,
 	GridToolbarColumnsButton,
   GridToolbarFilterButton
-	// GridToolbare,
 } from "@mui/x-data-grid";
 import DashboardBarChart from '../components/graphs/DashboardBarChart';
 
@@ -182,13 +181,17 @@ const Dashboard = () => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
+        style={{ }}
       >
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        <Header title="DASHBOARD"
+          subtitle="Welcome to Community Programs Dashboard"
+         />
       </Box>
 
       {/* GRID & CHARTS */}
 
       <Box
+      
         display="grid"
         gridTemplateColumns="repeat(auto-fill, minmax(280px, 1fr))"
         gridAutoRows="140px"
@@ -240,7 +243,7 @@ const Dashboard = () => {
             justifyContent: "center",
             width: "93%",
             height: "100%",
-            backgroundColor: '#83CFCD'
+            backgroundColor: '#FFFFFF'
           }}
         >
           <AddCircleOutlineIcon
@@ -260,7 +263,7 @@ const Dashboard = () => {
       
        <Box
         sx={{
-          backgroundColor: colors.primary[400],
+          backgroundColor: '#f0f0f0',
           height: "400px",
           borderRadius: "16px",
           mb: "10px",
@@ -269,16 +272,18 @@ const Dashboard = () => {
         <Typography
           variant="h3"
           fontWeight="600"
+          textTransform="uppercase"
           sx={{
             padding: "30px 30px 0 30px",
           }}
+          
         >
-          Global MPI Score of different communities
+          Global MPI Score of all communities
         </Typography>
         
         <Box
           sx={{
-            backgroundColor: colors.primary[400],
+            backgroundColor: '#f0f0f0',
             height: "350px",
             borderRadius: "16px",
           }}
@@ -289,7 +294,7 @@ const Dashboard = () => {
        </Box>
        <Box
         sx={{
-          backgroundColor: colors.primary[400],
+          backgroundColor: '#f0f0f0',
           // height: "200px",
           borderRadius: "16px",
         }}
@@ -299,7 +304,7 @@ const Dashboard = () => {
 							fontWeight="600"
               mt= '20px'
               ml='20px'
-              // padding='20px'
+              // 
 							color='primary'
 						>
 							EVENTS
@@ -322,8 +327,7 @@ const Dashboard = () => {
 						"& .MuiDataGrid-columnHeaders":
 							{
 								backgroundColor:
-									colors
-										.blueAccent[700],
+                "#83cfcd",
 								borderBottom:
 									"none",
 							},
@@ -336,8 +340,7 @@ const Dashboard = () => {
 							{
 								borderTop: "none",
 								backgroundColor:
-									colors
-										.blueAccent[700],
+									'#83cfcd',
 							},
 						"& .MuiCheckbox-root": {
 							color: `${colors.greenAccent[200]} !important`,

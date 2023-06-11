@@ -1,6 +1,11 @@
 import React from "react";
 import { Box, useTheme, Button, Modal, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import Header from "../../components/Header";
@@ -15,7 +20,14 @@ const ManageUser = () => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
-
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
 	const style = {
 		position: "absolute",
 		top: "50%",
@@ -253,10 +265,15 @@ const ManageUser = () => {
 					</Box>
 				</Modal>
 
+				<Box
+					style={{  width: '100%'}}
+				>
+
 				<Header
 					title="Manage Members"
 					subtitle="Members Details"
-				/>
+					/>
+				</Box>
 				{/* <Box ml="auto" display="flex" alignItems="center">
           <Box mr={1}>
             <Button
@@ -286,6 +303,7 @@ const ManageUser = () => {
 			<Box
 				m="40px 0 0 0"
 				height="75vh"
+				
 				sx={{
 					"& .MuiDataGrid-root": {
 						border: "none",
@@ -313,6 +331,10 @@ const ManageUser = () => {
 					"& .MuiCheckbox-root": {
 						color: `${colors.greenAccent[200]} !important`,
 					},
+					"& .MuiDataGrid-toolbarContainer .MuiButton-text":
+					{
+						color: `${colors.grey[100]} !important`,
+					},
 				}}
 			>
 				<DataGrid
@@ -320,6 +342,9 @@ const ManageUser = () => {
 					getRowId={(row) => row._id}
 					rows={UserData}
 					columns={columns}
+					components={{
+						Toolbar: CustomToolbar,
+					}}
 				/>
 			</Box>
 		</Box>

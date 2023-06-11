@@ -1,5 +1,10 @@
 import { Box, Typography, useTheme, Button } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
@@ -27,9 +32,21 @@ const Invoices = () => {
 		},
 	];
 
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
+
+
 	return (
 		<Box m="20px">
-			<Box display="flex" alignItems="center" mb="20px">
+			<Box display="flex" alignItems="center" mb="20px"
+			style={{ }}
+			>
 				<Header
 					title="Manage Programs"
 					subtitle="Number of programs running"
@@ -38,6 +55,7 @@ const Invoices = () => {
 					ml="auto"
 					display="flex"
 					alignItems="center"
+					
 				>
 					<Box mr={1}>
 						<Button
@@ -90,12 +108,19 @@ const Invoices = () => {
 					"& .MuiCheckbox-root": {
 						color: `${colors.greenAccent[200]} !important`,
 					},
+					"& .MuiDataGrid-toolbarContainer .MuiButton-text":
+							{
+								color: `${colors.grey[100]} !important`,
+							},
 				}}
 			>
 				<DataGrid
 					checkboxSelection
 					rows={mockDataInvoices}
 					columns={columns}
+					components={{
+						Toolbar: CustomToolbar,
+					}}
 				/>
 			</Box>
 		</Box>

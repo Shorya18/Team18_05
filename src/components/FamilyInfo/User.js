@@ -1,6 +1,11 @@
 import React from "react";
 import { div, useTheme, Button, Modal, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import Header from "../Header";
@@ -78,8 +83,7 @@ const ManageUser = () => {
           display: "flex",
           flexDirection: "column",
           width: "60vw",
-          background: "#DBDFEA",
-          borderRadius:"12px",
+          background: "#f0f0f0",
           paddingBottom:"15px"
         }}
       >
@@ -96,7 +100,7 @@ const ManageUser = () => {
           <div style={{ justifyContent: "space-around", width: "600px" }}>
             <div style={{display:"flex",justifyContent:"space-between"}}>
             <h1>{individual.name}</h1>
-            <Button onClick={handleButtonClick} variant="contained" style={{height:"35px",marginTop:"25px",marginRight:"20px", backgroundColor: '#fbe400', color: 'black', fontFamily:'Bayon', fontSize:'15px'}}>See Family</Button>
+            <Button onClick={handleButtonClick} variant="contained" style={{height:"35px",marginTop:"25px",marginRight:"20px", backgroundColor: '#fbe400', color: 'black', fontFamily:'Merriweather', fontSize:'15px'}}>See Family</Button>
             </div>
             <div>
               <div className="text">

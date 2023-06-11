@@ -1,5 +1,10 @@
 import { Box, useTheme, Button, Snackbar, Alert, AlertTitle } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import Header from "../../components/Header";
@@ -146,26 +151,32 @@ const ManageCommunity = () => {
 			headerName: "Delete Community",
 			flex: 1,
 			renderCell: (params) => (
-				// <Button
-				// color="negative"
-				//   variant="contained"
-				//   onClick={() => {
-				//     console.log("delete");
-				//   }}
-				// >
-				<DeleteIcon
-					sx={{ color: red[700] }}
-					onClick={() => {
-						console.log("delete");
-            onDeleteCommunity(params);
-					}}
-				/>
+				<Button
+				color="negative"
+				  variant="contained"
+				  style={{ background: red[700], color: "#fff"}}
+				  onClick={() => {
+				    console.log("delete");
+            		onDeleteCommunity(params);
 
-				// </Button>
+				  }}
+				>
+					DELETE
+
+			 </Button>
 			),
 		},
 	];
 
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
+	
 	return (
 		<Box m="20px">
        {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
@@ -175,7 +186,9 @@ const ManageCommunity = () => {
               </Alert>
           </Snackbar>)}
           
-			<Box display="flex" alignItems="center" mb="20px">
+			<Box display="flex" alignItems="center" mb="20px"
+			style={{ }}
+			>
 				<Header
 					title="Manage Community"
 					subtitle="Number of Community"
@@ -194,6 +207,8 @@ const ManageCommunity = () => {
 							}}
 							color="secondary"
 							variant="contained"
+							style={{ background: '#fbe400', color: '#000000' , width: '10rem', fontWeight: 'bold' }}
+
 						>
 							Add Community
 						</Button>
@@ -203,6 +218,7 @@ const ManageCommunity = () => {
 			<Box
 				m="40px 0 0 0"
 				height="75vh"
+				
 				sx={{
 					"& .MuiDataGrid-root": {
 						border: "none",
@@ -230,6 +246,10 @@ const ManageCommunity = () => {
 					"& .MuiCheckbox-root": {
 						color: `${colors.greenAccent[200]} !important`,
 					},
+					"& .MuiDataGrid-toolbarContainer .MuiButton-text":
+					{
+						color: `${colors.grey[100]} !important`,
+					},
 				}}
 			>
 				<DataGrid
@@ -237,6 +257,9 @@ const ManageCommunity = () => {
 					getRowId={(row) => row._id}
 					rows={communityData}
 					columns={columns}
+					components={{
+						Toolbar: CustomToolbar,
+					}}
 				/>
 			</Box>
 		</Box>

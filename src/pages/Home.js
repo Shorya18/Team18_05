@@ -9,7 +9,7 @@ import HeroSection from "../components/HomePage/Nav2";
 
 export default function home() {
   return (
-    <div style={{ marginLeft: "40px", marginRight: "40px" }}>
+    <div style={{ marginLeft: "40px", marginRight: "40px", backgroundColor: '#FFFFFF' }}>
       {/* <Nav /> */}
       <HeroSection />
       <HomeBelowNav />

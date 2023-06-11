@@ -1,6 +1,11 @@
 import React from "react";
 import { Box, useTheme, Button, Modal, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import Header from "../../components/Header";
@@ -105,6 +110,15 @@ const Team = () => {
 		},
 	];
 
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
+
 	return (
 		<Box m="20px">
 			<Box display="flex" alignItems="center" mb="20px">
@@ -192,11 +206,19 @@ const Team = () => {
 						</div>
 					</Box>
 				</Modal>
+
+				<Box
+					style={{  width: '100%'}}
+
+				>
+
 				<Header
 					title="Manage Staff"
 					subtitle="Number of staff members"
-				/>
+					/>
+					</Box>
 				<Box
+				
 					ml="auto"
 					display="flex"
 					alignItems="center"
@@ -210,6 +232,7 @@ const Team = () => {
 							}}
 							color="secondary"
 							variant="contained"
+							style={{ background: '#fbe400', color: '#000000' , width: '8rem', fontWeight: 'bold' }}
 						>
 							Add Staff
 						</Button>
@@ -224,6 +247,8 @@ const Team = () => {
 							type="submit"
 							color="negative"
 							variant="contained"
+							style={{ background: '#fff', color: '#000' , width: '8rem', fontWeight: 'bold' }}
+
 						>
 							Delete Staff
 						</Button>
@@ -260,6 +285,10 @@ const Team = () => {
 					"& .MuiCheckbox-root": {
 						color: `${colors.greenAccent[200]} !important`,
 					},
+					"& .MuiDataGrid-toolbarContainer .MuiButton-text":
+					{
+						color: `${colors.grey[100]} !important`,
+					},
 				}}
 			>
 				<DataGrid
@@ -267,6 +296,9 @@ const Team = () => {
 					getRowId={(row) => row._id}
 					rows={staffData}
 					columns={columns}
+					components={{
+						Toolbar: CustomToolbar,
+					}}
 				/>
 			</Box>
 		</Box>

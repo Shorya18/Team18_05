@@ -8,6 +8,7 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
+  background-color: #f0717d
 }
 
 .app {
@@ -32,4 +33,8 @@ body,
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.MuiInputBase-input  {
+  background: #f0f0f0 !important;
 }

@@ -78,16 +78,24 @@ const Calendar = () => {
           Loading...
         </div>
       ) : (
-    <Box m="20px">
+    <Box m="20px"
+    style={{ margin: '20px'}}
+    >
       <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
 
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between"
+          backgroundColor={'#f0f0f0'}
+          marginTop= '20px'
+      
+      >
         {/* CALENDAR SIDEBAR */}
         <Box
           flex="1 1 20%"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={'#f0f0f0'}
           p="15px"
           borderRadius="4px"
+          marginTop= '20px'
+
         >
           <Typography variant="h5">Events</Typography>
           <List>

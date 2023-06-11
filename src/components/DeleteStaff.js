@@ -1,6 +1,11 @@
 import React from "react";
 import { Box, useTheme, Button, Modal, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
@@ -101,10 +106,20 @@ const DeleteStaff = () => {
 			),
 		},
 	];
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
 
 	return (
 		<Box m="20px">
-			<Box display="flex" alignItems="center" mb="20px">
+			<Box display="flex" alignItems="center" mb="20px"
+			style={{ }}
+			>
 				<Header
 					title="Manage Staff"
 					subtitle="Number of staff members"
@@ -123,6 +138,8 @@ const DeleteStaff = () => {
 							}}
 							color="secondary"
 							variant="contained"
+							style={{ background: '#fbe400', color: '#000000' , width: '8rem', fontWeight: 'bold' }}
+
 						>
 							Add Staff
 						</Button>
@@ -132,6 +149,8 @@ const DeleteStaff = () => {
 							type="submit"
 							color="negative"
 							variant="contained"
+							style={{ background: '#fff', color: '#000' , width: '8rem', fontWeight: 'bold' }}
+
 						>
 							Delete Staff
 						</Button>
@@ -139,6 +158,7 @@ const DeleteStaff = () => {
 				</Box>
 			</Box>
 			<Box
+			
 				m="40px 0 0 0"
 				height="75vh"
 				sx={{
@@ -154,7 +174,7 @@ const DeleteStaff = () => {
 					},
 					"& .MuiDataGrid-columnHeaders": {
 						backgroundColor:
-							colors.blueAccent[700],
+							'#83cfcd',
 						borderBottom: "none",
 					},
 					"& .MuiDataGrid-virtualScroller": {
@@ -163,10 +183,14 @@ const DeleteStaff = () => {
 					"& .MuiDataGrid-footerContainer": {
 						borderTop: "none",
 						backgroundColor:
-							colors.blueAccent[700],
+							'#83cfcd',
 					},
 					"& .MuiCheckbox-root": {
 						color: `${colors.greenAccent[200]} !important`,
+					},
+					"& .MuiDataGrid-toolbarContainer .MuiButton-text":
+					{
+						color: `${colors.grey[100]} !important`,
 					},
 				}}
 			>
@@ -175,6 +199,9 @@ const DeleteStaff = () => {
 					getRowId={(row) => row._id}
 					rows={staffData}
 					columns={columns}
+					components={{
+						Toolbar: CustomToolbar,
+					}}
 				/>
 			</Box>
 		</Box>

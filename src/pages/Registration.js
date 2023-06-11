@@ -161,7 +161,9 @@ export default function Registration() {
   const date_end = moment(EventData.endDate).format("DD MMM, YYYY");
 
   return (
-    <div style={{}}>
+    <div style={{
+      backgroundColor: '#FFFFFF'
+    }}>
           {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
               <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
                   <AlertTitle>{alertType}</AlertTitle>

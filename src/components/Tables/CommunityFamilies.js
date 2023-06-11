@@ -1,5 +1,10 @@
 import { Box, useTheme, Button } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import Header from "../Header";
@@ -132,14 +137,26 @@ const CommunityFamilies = () => {
 		},
 	];
 
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
+
 	return (
 		<Box m="20px">
-			<Box display="flex" alignItems="center" mb="20px">
+			<Box display="flex" alignItems="center" mb="20px"
+			style={{ }}
+			>
 				<Header
 					title={`Manage ${state.communityData} Community`}
 					subtitle={`Families in  ${state.communityData}`}
 				/>
 				<Box
+				
 					ml="auto"
 					display="flex"
 					alignItems="center"
@@ -157,6 +174,8 @@ const CommunityFamilies = () => {
 									}
 								);
 							}}
+							style={{ background: '#fbe400', color: '#000000'}}
+
 							color="secondary"
 							variant="contained"
 						>
@@ -195,6 +214,10 @@ const CommunityFamilies = () => {
 					"& .MuiCheckbox-root": {
 						color: `${colors.greenAccent[200]} !important`,
 					},
+					"& .MuiDataGrid-toolbarContainer .MuiButton-text":
+					{
+						color: `${colors.grey[100]} !important`,
+					},
 				}}
 			>
 				<DataGrid
@@ -202,6 +225,9 @@ const CommunityFamilies = () => {
 					getRowId={(row) => row.familyId}
 					rows={communityData}
 					columns={columns}
+					components={{
+						Toolbar: CustomToolbar,
+					}}
 				/>
 			</Box>
 		</Box>

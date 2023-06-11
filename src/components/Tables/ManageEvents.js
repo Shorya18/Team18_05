@@ -1,6 +1,11 @@
 import React from "react";
 import { Box, useTheme, Button, Modal, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import Header from "../../components/Header";
@@ -208,9 +213,20 @@ const ManageEvent = () => {
     },
   ];
 
+  function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
+
   return (
     <Box m="20px" p="20px"  style={{overflowY: "scroll", height: "90vh"}}>
-      <Box display="flex" alignItems="center" sx={{width: "100%"}}>
+      <Box display="flex" alignItems="center" sx={{width: "100%"}}
+      style={{ }}
+      >
         <div alignItems="left" style={{width: "50%"}}>
         <Header title="Manage Members" subtitle="Members Details" />
 
@@ -218,20 +234,20 @@ const ManageEvent = () => {
           <h2 style={{color: "#EEA47F", fontFamily: "sans-serif",textAlign: "center"}}>Welcome To Event Manager</h2> */}
         </div>
         <div>
-          <div style={{margin: "20px", border: "solid black", padding: "20px", borderRadius: "20px", boxShadow: "5px 5px 10px gray"}}>
+          <div style={{ backgroundColor:"#f0f0f0", margin: "20px", border: "solid black", padding: "20px", borderRadius: "20px", boxShadow: "5px 5px 10px gray"}}>
               <h4 style={{fontFamily: "sans-serif", }}>Total Number of Active Events</h4>
               <div style={{fontSize: "40px", color: "green", textAlign: "center", fontFamily: "sans-serif", fontWeight: "bold"}}>{EventData.length}</div>
           </div>
         </div>
         <div>
-          <div style={{margin: "20px", border: "solid black", padding: "20px", borderRadius: "20px", boxShadow: "5px 5px 10px gray"}}>
+          <div style={{ backgroundColor:"#f0f0f0", margin: "20px", border: "solid black", padding: "20px", borderRadius: "20px", boxShadow: "5px 5px 10px gray"}}>
               <h4 style={{fontFamily: "sans-serif", }}>Total Number of Inactive Events</h4>
               <div style={{fontSize: "40px", color: "red", textAlign: "center", fontFamily: "sans-serif", fontWeight: "bold"}}>{EventData2.length}</div>
           </div>
         </div>
       </Box>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mt="20px">
-      <div style={{textAlign: "center" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently Active Events</div>
+      <Box  display="flex" alignItems="center" justifyContent="space-between" mt="20px">
+      <div style={{textAlign: "center" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "black"}}>Currently Active Events</div>
 
         <Box ml="auto" display="flex" alignItems="center">
           <Box mr={1}>
@@ -241,6 +257,8 @@ const ManageEvent = () => {
               }}
               color="secondary"
               variant="contained"
+              style={{ background: '#fbe400', color: '#000000'}}
+
             >
               Add Event
             </Button>
@@ -275,6 +293,10 @@ const ManageEvent = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text":
+							{
+								color: `${colors.grey[100]} !important`,
+							},
         }}
       >
         <DataGrid
@@ -282,10 +304,13 @@ const ManageEvent = () => {
           getRowId={(row) => row._id}
           rows={EventData}
           columns={columns}
+          components={{
+            Toolbar: CustomToolbar,
+          }}
         />
       </Box>
       <Box display="flex" alignItems="center" justifyContent="space-between" mt="20px">
-      <div style={{ marginTop: "30px" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently Inactive Events</div>
+      <div style={{ marginTop: "30px" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "black"}}>Currently Inactive Events</div>
      </Box>
       <Box
         m="20px 0 0 0"
@@ -315,6 +340,10 @@ const ManageEvent = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text":
+							{
+								color: `${colors.grey[100]} !important`,
+							},
         }}
       >
         <DataGrid
@@ -322,6 +351,9 @@ const ManageEvent = () => {
           getRowId={(row) => row._id}
           rows={EventData2}
           columns={columns2}
+          components={{
+            Toolbar: CustomToolbar,
+          }}
         />
       </Box>
       {/* <Box display="flex" alignItems="center" mt="20px" mb="20px">

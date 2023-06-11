@@ -123,7 +123,7 @@ export default function FamilyInfo() {
       .then((response) => {
         const data = response.data;
         //console.log(data);
-        console.log("heheh", data)
+        // console.log("heheh", data)
         const foundUsers = data.filter(
           (user) => user.familyId === state.familyId
         );
@@ -167,13 +167,26 @@ export default function FamilyInfo() {
               </Alert>
           </Snackbar>)}
         
-          <Box display="flex" alignItems="center" mb="20px">
+          <Box display="flex" alignItems="center" mb="20px"
+          style={{ }}
+
+          >
             <Header
               title={`Manage Family Members`}
               />
             <Box ml="auto" display="flex" alignItems="center">
               <Box mr={1}>
+              <Button
+              
+                style={{ background: '#fbe400', color: '#000000', marginRight: '10px' }}
+                  onClick={handleButtonClick}
+                  color="primary"
+                >
+                  ADD MEMBER
+                </Button>
+
                 <Button
+                style={{ background: '#fff', color: '#000000'}}
                   onClick={handleBack}
                   color="primary"
                 >
@@ -186,26 +199,24 @@ export default function FamilyInfo() {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            padding:'20px'
           }}
         >
 
           <div
             style={{
               display: "flex",
-              justifyContent: "space-around",
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
+             
             }}
           >
-            <Card
+            {/* <Card
               sx={{
                 display: "flex",
                 marginTop: "15px",
                 marginLeft: "15px",
                 width: 300,
                 height: 168,
-                backgroundColor: "#DBDFEA",
+                backgroundColor: "#f0f0f0",
                 borderRadius: "5px",
                 cursor: "pointer",
               }}
@@ -225,7 +236,7 @@ export default function FamilyInfo() {
                   Add Member
                 </Typography>
               </Box>
-            </Card>
+            </Card> */}
 
             {individual.map((element) => (
               <UserDetailCard
@@ -242,7 +253,6 @@ export default function FamilyInfo() {
           <div
           style={{
             display: "flex",
-            alignItems: "center",
             justifyContent: "space-between",
             width: "100%",
           }}
@@ -251,13 +261,13 @@ export default function FamilyInfo() {
           <Card
               sx={{
                 display: "flex",
-                marginTop: "15px",
+                marginTop: "20px",
                 marginLeft: "15px",
                 padding: "20px",
                 width: 500,
-                height: 400,
-                backgroundColor: "#DBDFEA",
-                borderRadius: "5px",
+                height: 450,
+                backgroundColor: "#f0f0f0",
+                borderRadius: "0px",
                 cursor: "pointer",
               }}
             >
@@ -271,7 +281,7 @@ export default function FamilyInfo() {
                   variant="h3"
                   sx={{ color: "black" }}
                 >
-                  Calculate MPI Score for families by changing the parameters below:
+                 Standard of Living:
                 </Typography>
 
                 <CheckMarkNav
@@ -285,7 +295,9 @@ export default function FamilyInfo() {
 
 
 
-            <div style={{  display: "flex", alignContent: "center" }}>
+            <div style={{  display: "flex", alignContent: "center",
+                marginLeft: "15px",
+                padding: "20px" }}>
               <LineGraph data = {communityData} />
               {/* <LineGraph /> */}
             </div>

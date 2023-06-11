@@ -69,7 +69,10 @@ export default function InfoPage() {
         });
       }
       } style={{margin: "10px", backgroundColor: "green"}} className="register-button">Register Now</button>
-      <button onClick={()=>{
+      <button 
+      
+      onClick={()=>{
+        
         navigate("/");
       }
       } className="register-button">Back</button>

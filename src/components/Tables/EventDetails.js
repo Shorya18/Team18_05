@@ -2,7 +2,12 @@ import React from "react";
 import { Box, useTheme, Button, Modal, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridToolbarContainer,
+	GridToolbarColumnsButton,
+  GridToolbarFilterButton
+} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import Header from "../../components/Header";
@@ -214,6 +219,17 @@ const EventDetails = () => {
 	const date_end = moment(EventData.endDate).format("DD MMM, YYYY");
 	// const Total_Active_Events = EventData2.length
 
+	
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
+
+
 	return (
 		<Box
 			m="20px"
@@ -229,6 +245,8 @@ const EventDetails = () => {
 				<div style={{ display: "flex" }}>
 					<Box mr={1}>
 						<Button
+						style={{ background: '#fbe400', color: '#000000'}}
+
 							onClick={() => {
 								navigate(
 									"/manage-event"
@@ -563,11 +581,19 @@ const EventDetails = () => {
 				</Paper>
 			</Box>
 			<br></br>
+
+			<Box
+				style={{  width: '100%'}}
+
+			>
+
 			<Header
 				title="Registered Community Members"
 				subtitle="Members who registered for the Event"
-			/>
+				/>
+			</Box>
 			<Box
+			
 				m="40px 0 0 0"
 				height="75vh"
 				sx={{
@@ -597,6 +623,10 @@ const EventDetails = () => {
 					"& .MuiCheckbox-root": {
 						color: `${colors.greenAccent[200]} !important`,
 					},
+					"& .MuiDataGrid-toolbarContainer .MuiButton-text":
+					{
+						color: `${colors.grey[100]} !important`,
+					},
 				}}
 			>
 				<DataGrid
@@ -604,6 +634,9 @@ const EventDetails = () => {
 					getRowId={(row) => row._id}
 					rows={UserData}
 					columns={columns1}
+					components={{
+						Toolbar: CustomToolbar,
+					}}
 				/>
 				<Box
 					display="flex"
@@ -705,11 +738,19 @@ const EventDetails = () => {
 						</Box>
 					</Modal>
 				</Box>
+
+				<Box
+					style={{  width: '100%'}}
+
+				>
+
 				<Header
 					title="Assigned Staff"
 					subtitle="Number of staff members"
-				/>
+					/>
+					</Box>
 				<Box
+					
 					m="40px 0 40px 0"
 					height="75vh"
 					sx={{
@@ -747,6 +788,10 @@ const EventDetails = () => {
 						"& .MuiCheckbox-root": {
 							color: `${colors.greenAccent[200]} !important`,
 						},
+						"& .MuiDataGrid-toolbarContainer .MuiButton-text":
+						{
+							color: `${colors.grey[100]} !important`,
+						},
 					}}
 				>
 					<DataGrid
@@ -754,6 +799,9 @@ const EventDetails = () => {
 						getRowId={(row) => row._id}
 						rows={StaffData}
 						columns={columns2}
+						components={{
+							Toolbar: CustomToolbar,
+						}}
 					/>
 				</Box>
 			</Box>

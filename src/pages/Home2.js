@@ -25,7 +25,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#FFFFFF'}}>
       <div>
         <Nav2 />
         <BelowHeroSection />

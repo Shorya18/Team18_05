@@ -65,7 +65,10 @@ export default function UserDetailCard(props) {
     </Typography>
         </CardContent>
         <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
-          <Button variant="text" onClick={handleButtonClick}>
+          <Button 
+                style={{ background: '#fbe400', color: '#000000'}}
+          
+          variant="text" onClick={handleButtonClick}>
             View Details
           </Button>
         </Box>

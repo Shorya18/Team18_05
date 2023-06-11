@@ -288,20 +288,26 @@ const CommunityProfile = () => {
 						display="flex"
 						justifyContent="space-between"
 						alignItems="center"
+						style={{ }}
 					>
 						<Header
 							title={`${state.community} Community Profile`}
 							subtitle={`Information of the Families and Events in ${state.community}`}
 						/>
-						<Button variant="contained" color="negative"              onClick={() => {
-                navigate("/dashboard");
-              }}>
+						<Button 
+						style={{ background: '#fbe400', color: '#000000'}}
+
+						variant="contained" color="negative"              
+						onClick={() => {
+							navigate("/dashboard");
+						}}>
 					Back
 					</Button>
 					</Box>
 				
 				{/* FAMILIES */}
 				<Box
+				    
 					sx={{
 						"& .MuiDataGrid-root": {
 							border: "none",
@@ -394,20 +400,20 @@ const CommunityProfile = () => {
 						gridTemplateColumns="repeat(12, 1fr)"
 						gridAutoRows="180px"
 						gap="20px"
+						height="480px"
 						sx={{ mt: "15px", mb: "25px" }}
 					>
 						<Box
 							gridColumn="span 7"
 							gridRow="span 2"
-							backgroundColor={
-								colors
-									.primary[400]
-							}
-							height="400px"
+							backgroundColor='#f0f0f0'
+							
+							height="450px"
 						>
 							<Typography
 								variant="h4"
 								fontWeight="600"
+								textTransform="uppercase"
 								sx={{
 									padding: "30px 30px 0 30px",
 								}}
@@ -430,13 +436,16 @@ const CommunityProfile = () => {
 						<Box
 								gridColumn="span 5"
 								gridRow="span 2"
-								backgroundColor={colors.primary[400]}
 								p="30px"
-								height="400px"
+								height="450px"
+								style={{ background:'#f0f0f0' }}
+								
 							>
 								<Typography
 									variant="h4"
 									fontWeight="600"
+									textTransform="uppercase"
+									paddingBottom="20px"
 								>
 									Community MPI trend
 								</Typography>
@@ -535,18 +544,20 @@ const CommunityProfile = () => {
 						gridAutoRows="180px"
 						gap="20px"
 						sx={{ mt: "15px" }}
+						height="450px"
+
 					>
 						<Box
 							gridColumn="span 7"
 							gridRow="span 2"
-							backgroundColor={
-								colors
-									.primary[400]
-							}
+							backgroundColor='#f0f0f0'
+							height="450px"
+
 						>
 							<Typography
-								variant="h5"
-								fontWeight="600"
+								 variant="h3"
+								 fontWeight="600"
+								 textTransform="uppercase"
 								sx={{
 									padding: "30px 30px 0 30px",
 								}}
@@ -570,15 +581,14 @@ const CommunityProfile = () => {
 						<Box
 							gridColumn="span 5"
 							gridRow="span 2"
-							backgroundColor={
-								colors
-									.primary[400]
-							}
+							backgroundColor='#f0f0f0'
 							p="30px"
+							height="450px"
 						>
 							<Typography
-								variant="h5"
-								fontWeight="600"
+								 variant="h3"
+								 fontWeight="600"
+								 textTransform="uppercase"
 							>
 								People attending
 								events of

@@ -13,9 +13,13 @@ const Form = () => {
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Box
+        style={{  width: '100%'}} >
+          <Header title="CREATE USER" subtitle="Create a New User Profile" />
 
+        </Box>
       <Formik
+      
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
         validationSchema={checkoutSchema}

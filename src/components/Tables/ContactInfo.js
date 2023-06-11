@@ -52,13 +52,29 @@ const Contacts = () => {
 		},
 	];
 
+	
+	function CustomToolbar() {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarColumnsButton />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	}
+
+
 	return (
 		<Box m="20px">
+			<Box
+				style={{  width: '100%'}}
+			>
 			<Header
 				title="CONTACTS"
 				subtitle="List of Contacts for Future Reference"
 			/>
+			</Box>
 			<Box
+			
 				m="40px 0 0 0"
 				height="75vh"
 				sx={{
@@ -97,7 +113,8 @@ const Contacts = () => {
 				<DataGrid
 					rows={mockDataContacts}
 					columns={columns}
-					components={{ Toolbar: GridToolbar }}
+					components={{ Toolbar: CustomToolbar }}
+					
 				/>
 			</Box>
 		</Box>
