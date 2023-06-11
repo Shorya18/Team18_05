@@ -47,7 +47,7 @@ const ManageEvent = () => {
 
   const getInactiveEventDetails = () => {
     axios
-      .get("http://localhost:4421/details-Event-inactive")
+      .get("http://localhost:4421/details-Event/unactive")
       .then((response) => {
         const data = response.data;
         setEventData2(data);
@@ -82,12 +82,12 @@ const ManageEvent = () => {
   useEffect(() => {
     console.log(EventData);
   }, [EventData]);
-  
+
 
   useEffect(() => {
     console.log(EventData2);
   }, [EventData2]);
-  
+
 
   const theme = useTheme();
   const colors = tokens(theme.palette);

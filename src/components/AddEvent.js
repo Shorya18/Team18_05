@@ -70,7 +70,7 @@ const CommunityModal = () => {
       .then((response) => {
         const com = response.data;
         updateCommunities(com);
-       
+
       })
       .catch((error) => {
         console.error("Failed to retrieve staff data:", error);
@@ -150,7 +150,7 @@ const CommunityModal = () => {
         return [...prevSelected, community];
       }
     });
-    
+
   };
 
   const handleStaffSelect = (staff) => {
@@ -187,7 +187,7 @@ const CommunityModal = () => {
     console.log(nameOfActivity)
     for (let index = 0; index < selectedCommunities.length; index++) {
       const element = selectedCommunities[index];
-      myArray.push(element.name)
+      myArray.push(element._id)
     }
     const myArray2 = [];
     for (let index = 0; index < selectedStaffs.length; index++) {
@@ -396,14 +396,14 @@ const CommunityModal = () => {
 
               { selectedCommunities.length > 0 && <div style={{ marginBottom: '20px'}}>
                 <h4 style={{ marginBottom: 0 }}>
-                Added Communities: 
+                Added Communities:
                 </h4>
                 { "  " + selectedCommunities.map(c => c.name).join(', ')}
               </div>}
 
               { selectedStaffs.length > 0 && <div style={{ marginBottom: '20px'}}>
                 <h4 style={{ marginBottom: 0 }}>
-                Added Staff: 
+                Added Staff:
                 </h4>
                 { "  " + selectedStaffs.map(c => c.name).join(', ')}
               </div>}

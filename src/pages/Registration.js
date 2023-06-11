@@ -37,10 +37,9 @@ export default function Registration() {
     e.preventDefault();
     const data = {
       AdharCard_No: adharNo,
-      Event_id: state.Event_Reg_Id,
+      Event_id: state.Event_id,
       userId: userId,
     };
-    //console.log(data);
 
     // console.log(data)
     // const allowedCommunities=EventData.invitedCommunity;
@@ -53,14 +52,16 @@ export default function Registration() {
     })
       .then((res) => {
         console.log(res);
-        if (res.data == "Success") {
+        if (res.data == "Sucess") {
           if (state.Switcher == 1) {
+            alert("Registrated for the Event Successfully")
             navigate("/event-details", {
               state: {
                 Event_id: state.Event_id,
               },
             });
           } else {
+            alert("Registrated for the Event Successfully")
             navigate("/");
           }
         } else if (res.data == "No User Found") {
@@ -74,15 +75,15 @@ export default function Registration() {
         }
       })
       .catch((err) => {
-        alert("bad");
+        alert("Something went wrong with the DataBase");
         console.log(err);
       });
   };
 
   const data = {
-    EventId: state.Event_Reg_Id,
+    Event_id: state.Event_id,
   };
-  //console.log(data)
+  console.log(data)
 
   useEffect(() => {
     axios({
@@ -103,6 +104,27 @@ export default function Registration() {
   useEffect(() => {
     console.log(EventData);
   }, [EventData]);
+
+  const [Community, setCommunity] = useState([]);
+    useEffect(() => {
+      axios({
+        method: "POST",
+        url: "http://localhost:4421/details-Event/community",
+        data,
+      })
+        .then((res) => {
+          console.log(res);
+          const data = res.data;
+          setCommunity(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, []);
+
+  useEffect(() => {
+
+  }, [Community]);
 
   const date_start = moment(EventData.startDate).format("DD MMM, YYYY");
   const date_end = moment(EventData.endDate).format("DD MMM, YYYY");
@@ -182,6 +204,13 @@ export default function Registration() {
                 <b>Duration:</b> {EventData.duration}hrs
               </Typography>
 
+            </div>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+            <Typography variant="h5" gutterBottom style={{width:"100%",padding:"2px 20px",fontSize:"20px"}}><b>Invited Community:</b>{Community.map(name => (
+                <span style={{textDecoration: "non", marginRight: "5px"}}>
+                  {name},
+                </span>
+              ))}  </Typography>
             </div>
             </Paper>
           </div>
