@@ -265,7 +265,7 @@ const EventDetails = () => {
 									"/Registration",
 									{
 										state: {
-											Event_id: EventData._id,
+											Event_Reg_Id: EventData._id,
 											Switcher: 1,
 										},
 									}
