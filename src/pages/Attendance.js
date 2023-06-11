@@ -127,13 +127,16 @@ export default function Attendance() {
 				/>
 				<div>
 					<Button
-						style={{ marginLeft: "100px" }}
 						variant="contained"
+						style={{ marginLeft: "100px", background: '#fbe400', color: '#000000'}}
+
 					>
 						Submit
 					</Button>
 					<Button
-						style={{ marginLeft: "100px" }}
+						style={{ marginLeft: "20px", background: '#fff', color: '#000000'}}
+
+
 						variant="contained"
 						onClick={() => {
 							navigate(

@@ -245,7 +245,7 @@ const EventDetails = () => {
 				<div style={{ display: "flex" }}>
 					<Box mr={1}>
 						<Button
-						style={{ background: '#fbe400', color: '#000000'}}
+						style={{ background: '#fff', color: '#000000'}}
 
 							onClick={() => {
 								navigate(
@@ -271,6 +271,7 @@ const EventDetails = () => {
 									}
 								);
 							}}
+							style={{ background: '#fbe400', color: '#000000'}}
 							color="secondary"
 							variant="contained"
 						>
@@ -291,6 +292,9 @@ const EventDetails = () => {
 								}
 							);
 						}}
+
+						style={{ background: '#fbe400', color: '#000000'}}
+
 						color="secondary"
 						variant="contained"
 					>
@@ -446,7 +450,7 @@ const EventDetails = () => {
 						variant="h3"
 						gutterBottom
 						style={{
-							padding: "2px 20px",
+							padding: "20px 20px 0 20px",
 							fontSize: "20px",
 						}}
 					>
