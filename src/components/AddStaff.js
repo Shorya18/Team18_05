@@ -1,5 +1,5 @@
-import { Button, Grid, Paper, TextField } from "@mui/material";
-import React from "react";
+import { Button, Grid, Paper, TextField, Snackbar, Alert, AlertTitle } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import "./css/addstaff.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -21,6 +21,30 @@ const AddStaff = () => {
   const [role, setRole] = React.useState("");
   const [experience, setExperience] = React.useState("");
   const [assignCommunity, setAssignCommunity] = React.useState("");
+
+  const [openAlert, setAlertOpen] = React.useState(false);
+  const [message, setAlertMsg] = useState("");
+  const [alertType, setAlertType] = useState("");
+  
+  const openAlertToast = () => {
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlertOpen(false);
+    setAlertType('');
+    setAlertMsg('');
+  };
+
+  useEffect(() => {
+    openAlertToast();
+
+  }, [message, alertType]);
+
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -44,15 +68,31 @@ const AddStaff = () => {
     })
       .then((res) => {
         navigate("/team");
+        alert("Staff added successully!");
+
+        setAlertType('success');
+        setAlertMsg("Staff added successully!");
+
       })
       .catch((err) => {
-        alert("bad");
+        // alert("bad");
+
+        setAlertType('error');
+        setAlertMsg("There was some issue in processing your request. Please try again later.");
+       
         console.log(err);
       });
   };
 
   return (
     <div>
+      {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
+          <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
+              <AlertTitle>{alertType}</AlertTitle>
+                {message}
+          </Alert>
+      </Snackbar>)}
+
       <div className="d-flex flex-column align-items-center">
         <Grid>
           <Paper elevation={10} style={paperStyle}>

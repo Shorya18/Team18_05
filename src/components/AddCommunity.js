@@ -1,4 +1,5 @@
-import { Box, Button, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Button, TextField, Snackbar, Alert, AlertTitle } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -9,6 +10,29 @@ import axios from "axios";
 const AddCommunity = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
+
+  const [openAlert, setAlertOpen] = useState(false);
+  const [message, setAlertMsg] = useState("");
+  const [alertType, setAlertType] = useState("");
+  
+  const openAlertToast = () => {
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlertType('');
+    setAlertMsg('');
+    setAlertOpen(false);
+  };
+
+  useEffect(() => {
+    openAlertToast();
+
+  }, [message, alertType]);
+
 
   const handleFormSubmit = (values) => {
     const data = {
@@ -23,10 +47,16 @@ const AddCommunity = () => {
       data,
     })
       .then((res) => {
+        console.log(res);
+        setAlertType('success');
+        setAlertMsg("Community added successfully!");
+   
         navigate("/manage-community");
       })
       .catch((err) => {
-        alert("bad");
+        // alert("bad");
+        setAlertType('error');
+        setAlertMsg("There was some issue in processing your request. Please try again later.");
         console.log(err);
       });
     console.log(values);
@@ -34,6 +64,13 @@ const AddCommunity = () => {
 
   return (
     <Box m="20px" p="40px">
+       {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
+              <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
+                  <AlertTitle>{alertType}</AlertTitle>
+                    {message}
+              </Alert>
+          </Snackbar>)}
+
       <Header title="Create Community" subtitle="Create a New Community" />
 
       <Formik

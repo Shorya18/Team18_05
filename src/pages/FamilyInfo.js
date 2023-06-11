@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import UserDetailCard from "../components/FamilyInfo/UserCard";
 import axios from "axios";
-import { Card, Typography, Box } from "@mui/material";
+import { Card, Typography, Box, Button, Snackbar, Alert, AlertTitle } from "@mui/material";
 import CheckMarkNav from "../components/FamilyInfo/checkMarkNav";
 import { useLocation, useNavigate } from "react-router-dom";
 import LineGraph from "../components/graphs/FamilyMPITrend";
+import Header from "../components/Header";
 
 export default function FamilyInfo() {
   const [individual, setIndividual] = useState([]);
@@ -21,6 +22,29 @@ export default function FamilyInfo() {
 
   const { state } = useLocation();
   const obj = state;
+  
+  const [openAlert, setAlertOpen] = useState(false);
+  const [message, setAlertMsg] = useState("");
+  const [alertType, setAlertType] = useState("");
+  
+  const openAlertToast = () => {
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlertOpen(false);
+    setAlertType('');
+    setAlertMsg('');
+  };
+
+  useEffect(() => {
+    openAlertToast();
+
+  }, [message, alertType]);
 
   const handleCheckboxChange = (event) => {
     setServices((prevServices) => ({
@@ -48,9 +72,13 @@ export default function FamilyInfo() {
       .post("http://localhost:4421/add-familydetails", data)
       .then((response) => {
         const data = response.data;
-        alert("Updated");
+        setAlertType('success');
+        setAlertMsg("Family parameters updated successfully!");
       })
       .catch((error) => {
+        setAlertType('error');
+        setAlertMsg("There was some issue in processing your request. Please try again later.");
+       
         console.error("Failed to retrieve Community data:", error);
       });
     console.log(services);
@@ -66,6 +94,11 @@ export default function FamilyInfo() {
     });
   };
 
+  const handleBack= () => {
+    //console.log("check",state);
+   navigate(`/community-families`,{state});
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:4421/get-userdetails")
@@ -73,8 +106,8 @@ export default function FamilyInfo() {
         const data = response.data;
         const foundUsers = data.filter(
           (user) => user.familyId === state.familyId
-        );
-        // console.log(foundUsers);
+          );
+          // console.log(foundUsers);
         setIndividual(foundUsers);
 
         setIsLoading(false);
@@ -125,6 +158,30 @@ export default function FamilyInfo() {
           Loading...
         </div>
       ) : (
+
+        <Box m="20px">
+           {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
+              <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
+                  <AlertTitle>{alertType}</AlertTitle>
+                    {message}
+              </Alert>
+          </Snackbar>)}
+        
+          <Box display="flex" alignItems="center" mb="20px">
+            <Header
+              title={`Manage Family Members`}
+              />
+            <Box ml="auto" display="flex" alignItems="center">
+              <Box mr={1}>
+                <Button
+                  onClick={handleBack}
+                  color="primary"
+                >
+                  Back
+                </Button>
+              </Box>
+            </Box>
+          </Box>
         <div
           style={{
             display: "flex",
@@ -132,12 +189,7 @@ export default function FamilyInfo() {
             alignItems: "center",
           }}
         >
-          <CheckMarkNav
-            services={services}
-            handleCheckboxChange={handleCheckboxChange}
-            handleSubmit={handleSubmit}
-            state={state}
-          />
+
           <div
             style={{
               display: "flex",
@@ -186,12 +238,65 @@ export default function FamilyInfo() {
               />
             ))}
           </div>
-          <div style={{ display: "flex", alignContent: "center" }}>
-            <LineGraph data = {communityData} />
-            {/* <LineGraph /> */}
+
+          <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+
+          <Card
+              sx={{
+                display: "flex",
+                marginTop: "15px",
+                marginLeft: "15px",
+                padding: "20px",
+                width: 500,
+                height: 400,
+                backgroundColor: "#DBDFEA",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              <Box
+                sx={{
+                  margin: "auto",
+                }}
+              >
+                <Typography
+                  component="div"
+                  variant="h3"
+                  sx={{ color: "black" }}
+                >
+                  Calculate MPI Score for families by changing the parameters below:
+                </Typography>
+
+                <CheckMarkNav
+                  services={services}
+                  handleCheckboxChange={handleCheckboxChange}
+                  handleSubmit={handleSubmit}
+                  state={state}
+                />
+              </Box>
+            </Card>
+
+
+
+            <div style={{  display: "flex", alignContent: "center" }}>
+              <LineGraph data = {communityData} />
+              {/* <LineGraph /> */}
+            </div>
+
           </div>
+
+
         </div>
-      )}
-    </div>
+      </Box>
+        )}
+      </div>
+
   );
 }

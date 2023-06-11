@@ -1,10 +1,9 @@
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import React from "react";
+import { Button, Grid, Paper, TextField, Typography, Snackbar, Alert, AlertTitle } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import "../components/css/addstaff.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import BelowHeroSection from "../components/HomePage/BelowHeroSection";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import moment from "moment";
 import QuiltedImageList from "../components/LoginLeft";
 
@@ -23,6 +22,31 @@ export default function Registration() {
   const [adharNo, setAdharNo] = React.useState("");
   const [EventData, setEventData] = useState([]);
   const [userId, setUserId] = React.useState("");
+
+  const [openAlert, setAlertOpen] = useState(false);
+  const [message, setAlertMsg] = useState("");
+  const [alertType, setAlertType] = useState("");
+  
+  const openAlertToast = () => {
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlertOpen(false);
+    setAlertType('');
+    setAlertMsg('');
+  };
+
+  useEffect(() => {
+    openAlertToast();
+
+  }, [message, alertType]);
+
+
   function onChangeAdhar(e) {
     setAdharNo(e.target.value);
     // if (validateEmail(email))
@@ -31,6 +55,12 @@ export default function Registration() {
   }
   function onChangeUserId(e) {
     setUserId(e.target.value);
+  }
+
+  const formatDate = (date) => {
+    let tempDate = new Date(date);
+    let formattedDate =  tempDate.getFullYear() + '-' + (tempDate.getMonth() < 10 ? '0' + tempDate.getMonth(): tempDate.getMonth()) + '-' + (tempDate.getDate() < 10 ? '0' + tempDate.getDate(): tempDate.getDate());
+    return formattedDate
   }
 
   const onSubmit = (e) => {
@@ -55,27 +85,45 @@ export default function Registration() {
         console.log(res);
         if (res.data == "Success") {
           if (state.Switcher == 1) {
+            // setAlertType('success');
+            // setAlertMsg("Registration is successful!");
+        
             navigate("/event-details", {
               state: {
                 Event_id: state.Event_id,
               },
             });
           } else {
-            alert("Registered in Event");
+            // alert("Registered in Event");
+            setAlertType('success');
+            setAlertMsg("Registered in Event");
+          
             navigate("/");
           }
         } else if (res.data == "No User Found") {
-          alert(
-            "You Have Not A Part Of Any Community, Please Register YourSelf with the help of Voluteers"
-          );
+          setAlertType('error');
+          setAlertMsg("You Have Not A Part Of Any Community, Please Register YourSelf with the help of Voluteers");
+        
+          // alert(
+          //   "You Have Not A Part Of Any Community, Please Register YourSelf with the help of Voluteers"
+          // );
         } else if (res.data == "You Are Not from the allowed community") {
-          alert("You Are Not from the allowed community");
+          setAlertType('error');
+          setAlertMsg(res.data);
+        
+          // alert("You Are Not from the allowed community");
         } else {
-          alert("Error");
+          setAlertType('error');
+          setAlertMsg("There was some issue in processing your request. Please try again later.");
+         
+          // alert("Error");
         }
       })
       .catch((err) => {
-        alert("bad");
+        // alert("bad");
+        setAlertType('error');
+        setAlertMsg("There was some issue in processing your request. Please try again later.");
+       
         console.log(err);
       });
   };
@@ -98,6 +146,9 @@ export default function Registration() {
         //console.log(data);
       })
       .catch((err) => {
+        setAlertType('error');
+        setAlertMsg("There was some issue in processing your request. Please try again later.");
+       
         console.log(err);
       });
   }, []);
@@ -111,6 +162,12 @@ export default function Registration() {
 
   return (
     <div style={{}}>
+          {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
+              <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
+                  <AlertTitle>{alertType}</AlertTitle>
+                    {message}
+              </Alert>
+          </Snackbar>)}
       {/* <button
         style={{ margin: "20px" }}
         onClick={() => {
@@ -157,15 +214,15 @@ export default function Registration() {
                 <b>Name:</b> {EventData.nameOfActivity}
               </Typography>
               <Typography variant="h5" gutterBottom style={{padding:"2px 20px",fontSize:"20px"}}>
-                <b>Desciption:</b> {EventData.description}
+                <b>Description:</b> {EventData.description}
               </Typography>
             </div>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
               <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
-                <b>Start Date:</b> {EventData.startDate}
+                <b>Start Date:</b> {EventData.startDate && formatDate(EventData.startDate)}
               </Typography>
               <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
-                <b>End Date:</b> {EventData.endDate}
+                <b>End Date:</b> {EventData.endDate && formatDate(EventData.endDate)}
               </Typography>
             </div>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>

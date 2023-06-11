@@ -211,25 +211,27 @@ const ManageEvent = () => {
   return (
     <Box m="20px" p="20px"  style={{overflowY: "scroll", height: "90vh"}}>
       <Box display="flex" alignItems="center" sx={{width: "100%"}}>
-        <div alignItems="center" style={{width: "50%"}}>
-          <h1 style={{color: "#00539C", fontFamily: "sans-serif", textAlign: "center", fontSize: "50px", margin:"0px"}}>Event Manager</h1>
-          <h2 style={{color: "#EEA47F", fontFamily: "sans-serif",textAlign: "center"}}>Welcome To Event Manager😄</h2>
+        <div alignItems="left" style={{width: "50%"}}>
+        <Header title="Manage Members" subtitle="Members Details" />
+
+          {/* <h1 style={{color: "#00539C", fontFamily: "sans-serif", textAlign: "center", fontSize: "50px", margin:"0px"}}>Event Manager</h1>
+          <h2 style={{color: "#EEA47F", fontFamily: "sans-serif",textAlign: "center"}}>Welcome To Event Manager</h2> */}
         </div>
         <div>
           <div style={{margin: "20px", border: "solid black", padding: "20px", borderRadius: "20px", boxShadow: "5px 5px 10px gray"}}>
-              <h4 style={{fontFamily: "sans-serif", }}>Total Number of Acive Events</h4>
+              <h4 style={{fontFamily: "sans-serif", }}>Total Number of Active Events</h4>
               <div style={{fontSize: "40px", color: "green", textAlign: "center", fontFamily: "sans-serif", fontWeight: "bold"}}>{EventData.length}</div>
           </div>
         </div>
         <div>
           <div style={{margin: "20px", border: "solid black", padding: "20px", borderRadius: "20px", boxShadow: "5px 5px 10px gray"}}>
-              <h4 style={{fontFamily: "sans-serif", }}>Total Number of Acive Events</h4>
+              <h4 style={{fontFamily: "sans-serif", }}>Total Number of Inactive Events</h4>
               <div style={{fontSize: "40px", color: "red", textAlign: "center", fontFamily: "sans-serif", fontWeight: "bold"}}>{EventData2.length}</div>
           </div>
         </div>
       </Box>
       <Box display="flex" alignItems="center" justifyContent="space-between" mt="20px">
-      <div style={{textAlign: "center" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently Active Event</div>
+      <div style={{textAlign: "center" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently Active Events</div>
 
         <Box ml="auto" display="flex" alignItems="center">
           <Box mr={1}>
@@ -282,7 +284,7 @@ const ManageEvent = () => {
         />
       </Box>
       <Box display="flex" alignItems="center" justifyContent="space-between" mt="20px">
-      <div style={{ marginTop: "30px" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently Inactive Event</div>
+      <div style={{ marginTop: "30px" ,fontFamily: "sans-serif", fontSize: "20px", fontWeight: "bolder", color: "darkblue"}}>Currently Inactive Events</div>
      </Box>
       <Box
         m="20px 0 0 0"

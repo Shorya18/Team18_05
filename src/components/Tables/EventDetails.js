@@ -214,6 +214,12 @@ useEffect(() => {
     },
   ];
 
+  const formatDate = (date) => {
+    let tempDate = new Date(date);
+    let formattedDate =  tempDate.getFullYear() + '-' + (tempDate.getMonth() < 10 ? '0' + tempDate.getMonth(): tempDate.getMonth()) + '-' + (tempDate.getDate() < 10 ? '0' + tempDate.getDate(): tempDate.getDate());
+    return formattedDate
+  }
+  
   const date_start = moment(EventData.startDate).format('DD MMM, YYYY');
   const date_end = moment(EventData.endDate).format('DD MMM, YYYY');
   // const Total_Active_Events = EventData2.length
@@ -341,15 +347,15 @@ useEffect(() => {
                 <b>Name:</b> {EventData.nameOfActivity}
               </Typography>
               <Typography variant="h5" gutterBottom style={{padding:"2px 20px",fontSize:"20px"}}>
-                <b>Desciption:</b> {EventData.description}
+                <b>Description:</b> {EventData.description}
               </Typography>
             </div>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
               <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
-                <b>Start Date:</b> {EventData.startDate}
+                <b>Start Date:</b> {EventData.startDate && formatDate(EventData.startDate)}
               </Typography>
               <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
-                <b>End Date:</b> {EventData.endDate}
+                <b>End Date:</b> {EventData.endDate && formatDate(EventData.endDate)}
               </Typography>
             </div>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>

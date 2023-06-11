@@ -9,6 +9,11 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./User.css";
 
+const formatDate = (date) => {
+  let tempDate = new Date(date);
+  let formattedDate =  tempDate.getFullYear() + '-' + (tempDate.getMonth() < 10 ? '0' + tempDate.getMonth(): tempDate.getMonth()) + '-' + (tempDate.getDate() < 10 ? '0' + tempDate.getDate(): tempDate.getDate());
+  return formattedDate
+}
 
 const ManageUser = () => {
   const [UserData, setUserData] = useState([]);
@@ -139,7 +144,7 @@ const ManageUser = () => {
           </div>
         </div>
         <div style={{ marginLeft: "50px", marginRight: "50px" }}>
-          <h1>Medical History</h1>
+          <h1>Medical History:</h1>
           <hr />
           {individual && individual.medicalHistory && (
             <div >
@@ -150,7 +155,7 @@ const ManageUser = () => {
                       <div key={element._id} className="smallCard">
                         <div className="text">
                           <b>Last Medical Checkup Date:</b>
-                          {element.lastMedicalCheckup}
+                          { element.lastMedicalCheckup && formatDate(element.lastMedicalCheckup)}
                         </div>
                         <div className="text">
                           <b>Problems:</b>
@@ -200,7 +205,7 @@ const ManageUser = () => {
               )}
             </div>
           )}
-          <h1>Events Attended:</h1>
+          {/* <h1>Events Attended:</h1>
           <hr />
           {individual && individual.medicalHistory && (
             <div >
@@ -233,7 +238,7 @@ const ManageUser = () => {
                 <div>No Medical History</div>
               )}
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>)}

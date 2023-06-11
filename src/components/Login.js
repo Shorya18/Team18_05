@@ -9,11 +9,37 @@ import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import img1 from "../assets/images/tinymiracleslogo.jpg";
 import QuiltedImageList from "./LoginLeft";
+import { Snackbar, Alert, AlertTitle } from "@mui/material";
 
 function Login() {
   const navigate = useNavigate();
   const [email, ChangeEmail] = useState("");
   const [password, ChangePassword] = useState("");
+
+  const [openAlert, setAlertOpen] = useState(false);
+  const [message, setAlertMsg] = useState("");
+  const [alertType, setAlertType] = useState("");
+  
+  const openAlertToast = () => {
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlertOpen(false);
+    setAlertType('');
+    setAlertMsg('');
+  };
+
+  useEffect(() => {
+    openAlertToast();
+
+  }, [message, alertType]);
+
+
   function onChangeEmail(e) {
     ChangeEmail(e.target.value);
     // if (validateEmail(email))
@@ -44,10 +70,16 @@ function Login() {
       },
     })
       .then((res) => {
+        setAlertType('success');
+        setAlertMsg("User logged in successfully!");
         navigate("/dashboard");
+  
       })
       .catch((err) => {
-        alert("bad");
+        // alert("bad");
+        setAlertType('error');
+        setAlertMsg("There was some issue in processing your request. Please try again later.");
+       
         console.log(err);
       });
   }
@@ -68,6 +100,13 @@ function Login() {
         justifyContent: "space-between",
       }}
     >
+
+        {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
+              <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
+                  <AlertTitle>{alertType}</AlertTitle>
+                    {message}
+              </Alert>
+          </Snackbar>)}
       <div style={{ width: "50vw" }}>
         <QuiltedImageList style={{ height: "50vh", objectFit: "cover" }} />
         {/* <img src="https://images.unsplash.com/photo-1594708767771-a7502209ff51?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80" style={{width:"90%",height:"100vh"}}/> */}

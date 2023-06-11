@@ -1,12 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./css/adduser.css";
-import { Box } from "@mui/material";
+import { Box, Snackbar, Alert, AlertTitle  } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AddUser = () => {
   const { state } = useLocation();
   console.log(state);
+
+  const [openAlert, setAlertOpen] = useState(false);
+  const [message, setAlertMsg] = useState("");
+  const [alertType, setAlertType] = useState("");
+  
+  const openAlertToast = () => {
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlertType('');
+    setAlertMsg('');
+    setAlertOpen(false);
+  };
+
+  useEffect(() => {
+    openAlertToast();
+
+  }, [message, alertType]);
 
   const [name, setName] = useState("");
   const [mobNo, setMobNo] = useState("");
@@ -119,8 +141,12 @@ const AddUser = () => {
       );
 
       console.log(response.data);
+      setAlertType('success');
+      setAlertMsg("User details added successfully!");
       navigate("/manage-user"); // Handle the response as needed
     } catch (error) {
+      setAlertType('error');
+      setAlertMsg("There was some issue in processing your request. Please try again later.");
       console.error(error); // Handle error if request fails
     }
 
@@ -145,6 +171,14 @@ const AddUser = () => {
 
   return (
     <Box className="addusr_box">
+
+        {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
+            <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
+                <AlertTitle>{alertType}</AlertTitle>
+                  {message}
+            </Alert>
+        </Snackbar>)}
+
       <form onSubmit={handleSubmit}>
         <h3>Personal Details:</h3>
         <div className="grp-1">

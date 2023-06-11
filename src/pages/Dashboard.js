@@ -254,7 +254,7 @@ const Dashboard = () => {
             padding: "30px 30px 0 30px",
           }}
         >
-          MPI Score of different communities
+          Global MPI Score of different communities
         </Typography>
         
         <Box

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Button, Modal, Snackbar, Alert, AlertTitle } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -57,12 +57,36 @@ const names = [
   'Kelly Snyder',
 ];
 
-const CommunityModal = () => {
-  const [communities, updateCommunities] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [staffs, updateStaffs] = useState([]);
+  const CommunityModal = () => {
+    const [communities, updateCommunities] = useState([]);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [staffs, updateStaffs] = useState([]);
+
+    const [openAlert, setAlertOpen] = useState(false);
+  const [message, setAlertMsg] = useState("");
+  const [alertType, setAlertType] = useState("");
+
+  const openAlertToast = () => {
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlertOpen(false);
+    setAlertType('');
+    setAlertMsg('');
+  };
+
+  useEffect(() => {
+    openAlertToast();
+
+  }, [message, alertType]);
+
 
   useEffect(() => {
     axios
@@ -216,24 +240,41 @@ const CommunityModal = () => {
     })
       .then((res) => {
         if(res.data == "Date"){
-          alert("Invalid Dates");
+          // alert("Invalid Dates");
+          setAlertType('error');
+          setAlertMsg("Invalid Dates");
         }
         else if(res.data == "Description") {
-          alert("Minimum 20 Letters in Description");
+          // alert("Minimum 20 Letters in Description");
+          setAlertType('error');
+          setAlertMsg("Minimum 20 Letters in Description");
         }
         else {
           alert("Event Created !!");
+
+          setAlertType('success');
+          setAlertMsg("Event Created successully!");
           navigate("/manage-event");
         }
       })
       .catch((err) => {
-        alert("bad");
+        // alert("bad");
+        setAlertType('error');
+        setAlertMsg("There was some issue in processing your request. Please try again later.");
+       
         console.log(err);
       });
   };
 
   return (
     <div>
+       {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
+              <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
+                  <AlertTitle>{alertType}</AlertTitle>
+                    {message}
+              </Alert>
+          </Snackbar>)}
+
       <div className="d-flex flex-column align-items-center">
         <Grid>
           <Paper elevation={10} style={paperStyle}>

@@ -9,7 +9,7 @@ import {
 import { tokens } from "../theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Header from "../components/Header";
-import { useTheme, Button, Typography } from "@mui/material";
+import { useTheme, Button, Typography, Snackbar, Alert, AlertTitle  } from "@mui/material";
 import { saveAs } from "file-saver";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -27,6 +27,29 @@ import LineGraph from "../components/graphs/communityMPITrend";
 // import Yo from "../yo";
 
 const CommunityProfile = () => {
+
+	const [openAlert, setAlertOpen] = useState(false);
+	const [message, setAlertMsg] = useState("");
+	const [alertType, setAlertType] = useState("");
+	
+	const openAlertToast = () => {
+	  setAlertOpen(true);
+	};
+  
+	const handleAlertClose = (event, reason) => {
+	  if (reason === 'clickaway') {
+		return;
+	  }
+	  setAlertType('');
+	  setAlertMsg('');
+	  setAlertOpen(false);
+	};
+  
+	useEffect(() => {
+	  openAlertToast();
+  
+	}, [message, alertType]);
+
 	const [communityData, setCommunityData] = useState([]);
 	const [eventData, setEventData] = useState([]);
 
@@ -69,11 +92,17 @@ const CommunityProfile = () => {
 
 		axios.post("http://localhost:4421/details-Event/comwise", data)
 			.then((response) => {
+				// setAlertType('Success');
+        		// setAlertMsg("");
+
 				const data = response.data;
 				// console.log("event", data);	
 				setEventData(data);
 			})
 			.catch((error) => {
+				setAlertType('Error');
+        		setAlertMsg("Failed to retrieve Community data.");
+
 				console.error(
 					"Failed to retrieve Community data:",
 					error
@@ -248,6 +277,12 @@ const CommunityProfile = () => {
 	];
 	return (
 		<Box m="20px">
+			{message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
+              <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
+                  <AlertTitle>{alertType}</AlertTitle>
+                    {message}
+              </Alert>
+          </Snackbar>)}
 					{/* header */}
 					<Box
 						display="flex"

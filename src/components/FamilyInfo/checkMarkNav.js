@@ -4,14 +4,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const CheckMarkNav = ({ services, handleCheckboxChange, handleSubmit,state}) => {
     const navigate = useNavigate();
-    const handleBack= () => {
-      //console.log("check",state);
-     navigate(`/community-families`,{state});
-    };
+    
   return (
-    <div style={{ display: "flex", justifyContent: "space-between",width:"100%",padding:" 0px 80px" }}>
+    <div style={{ width:"100%",padding:"10px 0" }}>
       <div >
         <FormControlLabel
+          style={{display:'block'}}
           control={<Checkbox
             name="cookingFuel"
             checked={services.cookingFuel}
@@ -21,6 +19,7 @@ const CheckMarkNav = ({ services, handleCheckboxChange, handleSubmit,state}) => 
         />
 
         <FormControlLabel
+          style={{display:'block'}}
           control={<Checkbox
             name="sanitation"
             checked={services.sanitation}
@@ -30,6 +29,7 @@ const CheckMarkNav = ({ services, handleCheckboxChange, handleSubmit,state}) => 
         />
 
         <FormControlLabel
+          style={{display:'block'}}
           control={<Checkbox
             name="drinkingWater"
             checked={services.drinkingWater}
@@ -39,6 +39,7 @@ const CheckMarkNav = ({ services, handleCheckboxChange, handleSubmit,state}) => 
         />
 
         <FormControlLabel
+          style={{display:'block'}}
           control={<Checkbox
             name="electricity"
             checked={services.electricity}
@@ -48,6 +49,7 @@ const CheckMarkNav = ({ services, handleCheckboxChange, handleSubmit,state}) => 
         />
 
         <FormControlLabel
+          style={{display:'block'}}
           control={<Checkbox
             name="house"
             checked={services.house}
@@ -57,6 +59,7 @@ const CheckMarkNav = ({ services, handleCheckboxChange, handleSubmit,state}) => 
         />
 
         <FormControlLabel
+          style={{display:'block'}}
           control={<Checkbox
             name="assets"
             checked={services.assets}
@@ -65,16 +68,11 @@ const CheckMarkNav = ({ services, handleCheckboxChange, handleSubmit,state}) => 
           label="Assets"
         />
 
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button style={{margin:"10px 0"}} variant="contained" color="primary" onClick={handleSubmit}>
           Submit
         </Button>
       </div>
 
-      <div>
-        <Button variant="contained" color="primary" onClick={handleBack}>
-          Back
-        </Button>
-      </div>
     </div>
   );
 };

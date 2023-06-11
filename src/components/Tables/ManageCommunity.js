@@ -1,4 +1,4 @@
-import { Box, useTheme, Button } from "@mui/material";
+import { Box, useTheme, Button, Snackbar, Alert, AlertTitle } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
@@ -11,19 +11,80 @@ import { red } from '@mui/material/colors';
 
 const ManageCommunity = () => {
   const [communityData, setCommunityData] = useState([]);
-
-
   const navigate = useNavigate();
+
+  const [openAlert, setAlertOpen] = useState(false);
+  const [message, setAlertMsg] = useState("");
+  const [alertType, setAlertType] = useState("");
+  
+  const openAlertToast = () => {
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlertOpen(false);
+    setAlertType('');
+    setAlertMsg('');
+  };
+
   useEffect(() => {
+    openAlertToast();
+
+  }, [message, alertType]);
+
+
+  const getCOmmunityDetails = () => {
     axios
-      .get("http://localhost:4421/details-Community")
-      .then((response) => {
-        const data = response.data;
-        setCommunityData(data);
+    .get("http://localhost:4421/details-Community")
+    .then((response) => {
+      const data = response.data;
+      setCommunityData(data);
+    })
+    .catch((error) => {
+      console.error("Failed to retrieve Community data:", error);
+    });
+  }
+
+  const onDeleteCommunity = (params) => {
+    console.log(params);
+    const data = {
+      id: params.id
+    };
+
+    axios.defaults.withCredentials = true;
+    axios({
+      method: "POST",
+      url: "http://localhost:4421/delete-Community",
+      data,
+    })
+      .then((res) => {
+        console.log(res);
+        if(res.data == "Community Does Not Exist"){
+          setAlertType('error');
+          setAlertMsg("There was some issue in processing your request. Please try again later.");
+        }else{
+          getCOmmunityDetails();
+          setAlertType('success');
+          setAlertMsg("Community deleted successully!");
+        }
+
+        // navigate("/team");
       })
-      .catch((error) => {
-        console.error("Failed to retrieve Community data:", error);
+      .catch((err) => {
+        setAlertType('error');
+        setAlertMsg("There was some issue in processing your request. Please try again later.");
+       
+        console.log(err);
       });
+  };
+
+
+  useEffect(() => {
+    getCOmmunityDetails();
   }, []);
 
   useEffect(() => {
@@ -89,6 +150,7 @@ const ManageCommunity = () => {
         // >
           <DeleteIcon sx={{ color: red[700] }}  onClick={() => {
             console.log("delete");
+            onDeleteCommunity(params);
           }}
                   
                   />
@@ -100,6 +162,15 @@ const ManageCommunity = () => {
 
   return (
     <Box m="20px">
+
+        {message && (<Snackbar open={openAlert} autoHideDuration={3000} onClose={handleAlertClose}>
+              <Alert onClose={handleAlertClose} severity={alertType} variant="filled"  sx={{ width: '100%' }}>
+                  <AlertTitle>{alertType}</AlertTitle>
+                    {message}
+              </Alert>
+          </Snackbar>)}
+        
+
       <Box display="flex" alignItems="center" mb="20px">
         <Header title="Manage Community" subtitle="Number of Community" />
         <Box ml="auto" display="flex" alignItems="center">
