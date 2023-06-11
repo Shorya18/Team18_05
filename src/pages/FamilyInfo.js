@@ -129,7 +129,7 @@ export default function FamilyInfo() {
         );
         console.log(data)
         const y = foundUsers[0].MPIscore.map((item) => item.score);
-        const x = Array.from({ length: y.length }, (_, i) => i + 1);
+        const x =foundUsers[0].MPIscore.map((item) => item.date.split("T")[0]);
         const familyId = state.familyId;
         const finalData = [{ x, y,familyId}];
         // console.log("mpi", mpiScores); console.log("index", indexArray);

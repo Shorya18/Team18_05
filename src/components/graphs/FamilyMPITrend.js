@@ -3,19 +3,30 @@ import Plot from 'react-plotly.js';
 
 const LineGraph = ({data}) => {
   // Sample data
-//   const data = [
-//     {
-//       familyId: "8076794410",
-          // x: [1, 2],
-          // y: [0.4444444444444444, 0.666]
-//     },
-//   ];
-    console.log("line", data);
+  const monthNames = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  
+  const transformedData = data.map(item => {
+    const x = item.x.map(dateString => {
+      const monthIndex = parseInt(dateString.split("-")[1]) - 1;
+      const monthName = monthNames[monthIndex];
+      return monthName;
+    });
+  
+    return { ...item, x };
+  });
+    // data
+
+console.log(transformedData);
+
+    console.log("line", transformedData);
   // Layout configuration
   const layout = {
-    title: 'MPI IMPROVEMENTS',
+    title: 'MPI TREND',
     xaxis: {
-      title: 'Months',
+      title: 'Date',
     },
     yaxis: {
       title: 'MPI Value',
@@ -23,7 +34,7 @@ const LineGraph = ({data}) => {
     },
   };
 
-  return <Plot data={data} layout={layout} style={{width:"500px"}}/>;
+  return <Plot data={transformedData} layout={layout} style={{width:"500px"}}/>;
 };
 
 export default LineGraph;

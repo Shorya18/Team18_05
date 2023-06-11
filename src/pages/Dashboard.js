@@ -28,6 +28,7 @@ const Dashboard = () => {
   const [MPI, setMPI] = useState([]);
   const [barchart, setBarChartValue] = useState((<DashboardBarChart Score={MPI} data={communityData} />));
   const [individual, setIndividual] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -77,6 +78,7 @@ const Dashboard = () => {
       }));
       console.log(mpiScores);
       setMPI(mpiScores);
+      // setIsLoading(false);
 			})
 			.catch((error) => {
 				console.error(
@@ -157,7 +159,24 @@ const Dashboard = () => {
 	}
 
   return (
-    <Box m="20px">
+    <div >
+    {isLoading ? (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "200px",
+          width: "100%",
+          fontSize: "20px",
+          fontWeight: "bold",
+          color: "#555",
+        }}
+      >
+        Loading...
+      </div>
+    ) : (
+    <Box m="20px" >
       {/* HEADER */}
       <Box
         display="flex"
@@ -221,11 +240,11 @@ const Dashboard = () => {
             justifyContent: "center",
             width: "93%",
             height: "100%",
-            backgroundColor: colors.primary[400]
+            backgroundColor: '#83CFCD'
           }}
         >
           <AddCircleOutlineIcon
-            sx={{ fontSize: 80, color: colors.greenAccent[500] }}
+            sx={{ fontSize: 80, color: '#fbe400' }}
             onClick={() => {
               navigate("/add-Community");
             }}
@@ -248,7 +267,7 @@ const Dashboard = () => {
         }}
       >
         <Typography
-          variant="h5"
+          variant="h3"
           fontWeight="600"
           sx={{
             padding: "30px 30px 0 30px",
@@ -281,10 +300,7 @@ const Dashboard = () => {
               mt= '20px'
               ml='20px'
               // padding='20px'
-							color={
-								colors
-									.greenAccent[500]
-							}
+							color='primary'
 						>
 							EVENTS
 						</Typography>
@@ -294,7 +310,7 @@ const Dashboard = () => {
 					sx={{
 						"& .MuiDataGrid-root": {
 							border: "none",
-							fontSize: "14px",
+							fontSize: "15px",
 						},
 						"& .MuiDataGrid-cell": {
 							borderBottom: "none",
@@ -314,8 +330,7 @@ const Dashboard = () => {
 						"& .MuiDataGrid-virtualScroller":
 							{
 								backgroundColor:
-									colors
-										.primary[400],
+									'#FFFFFF',
 							},
 						"& .MuiDataGrid-footerContainer":
 							{
@@ -349,6 +364,14 @@ const Dashboard = () => {
       </Box>
     </Box>
 
+
+       {/* <Box >
+         <Yo />
+
+       </Box> */}
+     
+
+     
        {/* <Box >
          <Yo />
 
@@ -356,6 +379,8 @@ const Dashboard = () => {
      
 
     </Box>
+         )}
+         </div>
   );
 };
 

@@ -48,14 +48,14 @@ const AgeVsAttendeesBarChart = ({ isDashboard = false, data }) => {
 			padding={0.3}
 			valueScale={{ type: "linear" }}
 			indexScale={{ type: "band", round: true }}
-			colors={['#97e3d5']}
+			colors={['#fbe400']}
 			colorBy="index"
 			defs={[
 				{
 					id: "dots",
 					type: "patternDots",
 					background: "inherit",
-					color: "#38bcb2",
+					color: "#fbe400",
 					size: 4,
 					padding: 1,
 					stagger: true,

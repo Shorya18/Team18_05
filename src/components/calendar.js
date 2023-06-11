@@ -47,7 +47,7 @@ const Calendar = () => {
     });
   }, []);
   const handleDateClick = (selected) => {
-      
+      navigate("/add-event");
   };
 
   const handleEventClick = (selected) => {

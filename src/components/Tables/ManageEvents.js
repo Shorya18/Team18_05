@@ -253,6 +253,7 @@ const ManageEvent = () => {
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
+            font: '15px',
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
@@ -265,7 +266,7 @@ const ManageEvent = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
+            backgroundColor: '#FFFFFF',
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
@@ -292,6 +293,7 @@ const ManageEvent = () => {
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
+            font: '15px',
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
@@ -304,7 +306,7 @@ const ManageEvent = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
+            backgroundColor: '#FFFFFF',
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",

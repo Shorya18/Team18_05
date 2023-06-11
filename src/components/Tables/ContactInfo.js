@@ -78,7 +78,7 @@ const Contacts = () => {
 					},
 					"& .MuiDataGrid-virtualScroller": {
 						backgroundColor:
-							colors.primary[400],
+						'#FFFFFF',
 					},
 					"& .MuiDataGrid-footerContainer": {
 						borderTop: "none",

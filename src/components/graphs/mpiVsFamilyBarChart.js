@@ -65,7 +65,7 @@ const MpiVsFamilyBarChart = ({ data }) => {
 					id: 'lines',
 					type: 'patternLines',
 					background: 'inherit',
-					color: '#eed312',
+					color: '#fbe400',
 					rotation: -45,
 					lineWidth: 6,
 					spacing: 10

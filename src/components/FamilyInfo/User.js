@@ -96,7 +96,7 @@ const ManageUser = () => {
           <div style={{ justifyContent: "space-around", width: "600px" }}>
             <div style={{display:"flex",justifyContent:"space-between"}}>
             <h1>{individual.name}</h1>
-            <Button onClick={handleButtonClick} variant="contained" style={{height:"35px",marginTop:"25px",marginRight:"20px"}}>See Family</Button>
+            <Button onClick={handleButtonClick} variant="contained" style={{height:"35px",marginTop:"25px",marginRight:"20px", backgroundColor: '#fbe400', color: 'black', fontFamily:'Bayon', fontSize:'15px'}}>See Family</Button>
             </div>
             <div>
               <div className="text">
