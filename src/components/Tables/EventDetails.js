@@ -44,7 +44,7 @@ const EventDetails = () => {
   const data = {
     Event_id: state.Event_id,
   };
-  console.log(data)
+
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -54,7 +54,7 @@ const EventDetails = () => {
         data,
       })
         .then((res) => {
-          console.log(res);
+         // console.log(res);
           const data = res.data;
           setUserData(data);
         })
@@ -75,7 +75,7 @@ const EventDetails = () => {
         data,
       })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           const data = res.data;
           setStaffData(data);
         })
@@ -87,21 +87,25 @@ const EventDetails = () => {
 
 
   useEffect(() => {
+    const data = {
+      EventId: state.Event_id,
+    };
+    
     axios({
       method: "POST",
       url: "http://localhost:4421/details-Event/id",
       data,
     })
       .then((res) => {
-        console.log(res);
+
         const data = res.data;
         setEventData(data);
+     
       })
       .catch((err) => {
         console.log(err);
       });
-
-}, []);
+  }, []);
 
 
 useEffect(() => {
@@ -216,7 +220,8 @@ useEffect(() => {
 
   return (
     <Box m="20px" p="20px"  style={{overflowY: "scroll", height: "90vh"}}>
-       <Box ml="auto" display="flex" alignItems="center">
+       <Box ml="auto" display="flex" alignItems="center" style={{justifyContent:"space-between"}}>
+        <div style={{display:"flex"}}>
           <Box mr={1}>
             <Button
               onClick={() => {
@@ -243,7 +248,23 @@ useEffect(() => {
             >
               Register
             </Button>
+            
           </Box>
+          </div>
+          <div><Button
+              onClick={() => {
+                navigate("/attendance", {
+                  state: {
+                    Event_id: EventData._id,
+                    Switcher: 1,
+                  }
+                });
+              }}
+              color="secondary"
+              variant="contained"
+            >
+              Attendance
+            </Button></div>
         </Box>
       <Box display="flex" alignItems="center" mb="20px">
       <Modal
@@ -310,53 +331,45 @@ useEffect(() => {
           </Box>
         </Modal>
 
-        <Grid container spacing={2}>
-        <Grid item xs={12}>
-            <h1 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "25px", margin: "0px", padding: "0px"}}>Welcome to Event Detail Section</h1>
-        </Grid>
-        <Grid item xs={12}>
-            <h1 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "50px", margin: "0px", padding: "0px",color: "#00539C"}}>{EventData.nameOfActivity}</h1>
-        </Grid>
-        <Grid item xs={12}>
-            <p style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", margin: "0px", padding: "0px"}}>{EventData.description}</p>
-        </Grid>
-        <Grid item xs={6}>
-            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Event Starts From</h4>
-        </Grid>
-        <Grid item xs={6}>
-           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{date_start}</h4>
-        </Grid>
-        <Grid item xs={6}>
-            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Timing</h4>
-        </Grid>
-        <Grid item xs={6}>
-           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{EventData.startTime}</h4>
-        </Grid>
-        <Grid item xs={6}>
-            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Event End On</h4>
-        </Grid>
-        <Grid item xs={6}>
-           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{date_end}</h4>
-        </Grid>
-        <Grid item xs={6}>
-            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Theme of The event</h4>
-        </Grid>
-        <Grid item xs={6}>
-           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{EventData.theme}</h4>
-        </Grid>
-        <Grid item xs={6}>
-            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Duration of the Event</h4>
-        </Grid>
-        <Grid item xs={6}>
-           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{EventData.duration} Hour</h4>
-        </Grid>
-        <Grid item xs={6}>
-            <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>Venue</h4>
-        </Grid>
-        <Grid item xs={6}>
-           <h4 style={{textAlign: "center", fontFamily: "sans-serif", textShadow: "3px 3px 10px lightgray", fontSize: "20px", margin: "0px", padding: "0px"}}>{EventData.venue}</h4>
-        </Grid>
-    </Grid>
+        <Paper elevation={10} style={{width:"100%",marginTop:"20px"}}>
+            <Typography variant="h3" gutterBottom style={{padding:"2px 20px",fontSize:"20px"}}>
+              Event Details
+             <hr/>
+            </Typography>
+            <div>
+              <Typography variant="h5" gutterBottom style={{padding:"2px 20px",fontSize:"20px"}}>
+                <b>Name:</b> {EventData.nameOfActivity}
+              </Typography>
+              <Typography variant="h5" gutterBottom style={{padding:"2px 20px",fontSize:"20px"}}>
+                <b>Desciption:</b> {EventData.description}
+              </Typography>
+            </div>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
+                <b>Start Date:</b> {EventData.startDate}
+              </Typography>
+              <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
+                <b>End Date:</b> {EventData.endDate}
+              </Typography>
+            </div>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
+                <b>Venue:</b> {EventData.venue}
+              </Typography >
+              <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
+                <b>Theme:</b> {EventData.theme}
+              </Typography>
+            </div>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
+                <b>Start Time:</b> {EventData.startTime}
+              </Typography>
+              <Typography variant="h5" gutterBottom style={{width:"50%",padding:"2px 20px",fontSize:"20px"}}>
+                <b>Duration:</b> {EventData.duration}hrs
+              </Typography>
+
+            </div>
+            </Paper>
       </Box>
       <br></br>
       <Header title="Registered Community Members" subtitle="Members who registered for the Event" />

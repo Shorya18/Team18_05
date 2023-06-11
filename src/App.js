@@ -30,6 +30,7 @@ import DeleteEvent from "./components/DeleteEvent";
 import InfoPage from "./pages/EventInfoPage";
 import { Box } from "@mui/material";
 import AddUser2 from "./components/FamilyInfo/AddUser";
+import Attendance from "./pages/Attendance";
 
 
 
@@ -83,7 +84,7 @@ function App() {
             <Route path="/delete-event" element={<DeleteEvent/>}/>
             <Route path="/info" element={<InfoPage/>}/>
             {/* <Route path="/check" element={<AddUser/>}/> */}
-           
+            <Route path="/attendance" element={<Attendance/>}/>
           </Routes>
           </Box>
 

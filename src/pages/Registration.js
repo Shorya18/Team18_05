@@ -61,6 +61,7 @@ export default function Registration() {
               },
             });
           } else {
+            alert("Registered in Event");
             navigate("/");
           }
         } else if (res.data == "No User Found") {
@@ -94,6 +95,7 @@ export default function Registration() {
         console.log(res);
         const data = res.data;
         setEventData(data);
+        //console.log(data);
       })
       .catch((err) => {
         console.log(err);
