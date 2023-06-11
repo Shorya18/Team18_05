@@ -34,13 +34,13 @@ const Dashboard = () => {
   const handleClose = () => setOpen(false);
 
   const navigate = useNavigate();
-  let mpiScores = [];
+  // let mpiScores = [];
   useEffect(() => {
     axios
       .get("http://localhost:4421/details-Community")
       .then((response) => {
         const data = response.data;
-        //console.log(data);
+        console.log(data);
         setCommunityData(data);
         const mpiScores = data.map((community) => ({
           communityName: community.name,
@@ -165,21 +165,6 @@ const Dashboard = () => {
         alignItems="center"
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-
-        {/* <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px"
-            }}
-          >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Download Reports
-          </Button>
-        </Box> */}
       </Box>
 
       {/* GRID & CHARTS */}
@@ -195,7 +180,7 @@ const Dashboard = () => {
         {communityData.map((params, index) => (
         
            <DashboardCard key={index} communityName={params.name}
-           description={params.description} mpi={params.MPI_Score}/>
+           description={params.description} mpi={params.MPIscore.length === 0 ? 1 : params.MPIscore[params.MPIscore.length - 1].score}/>
         //   <Button
         //     key={index}
         //     sx={{

@@ -24,7 +24,18 @@ const CommunityFamilies = () => {
       .then((response) => {
         const data = response.data;
         //console.log(data);
-        setCommunityData(data);
+        const mpiScores = data.map((community) => ({
+          familyId: community.familyId,
+          MPI_score: community.MPIscore.length === 0 ? 1 : community.MPIscore[community.MPIscore.length - 1].score,
+          drinkingWater: community.drinkingWater,
+          electricity: community.electricity,
+          cookingFuel: community.cookingFuel,
+          sanitation: community.sanitation,
+          house: community.house,
+          community:community.community
+          }));
+          console.log(mpiScores)
+        setCommunityData(mpiScores);
       })
       .catch((error) => {
         console.error("Failed to retrieve Community data:", error);
@@ -73,7 +84,7 @@ const CommunityFamilies = () => {
       flex: 0.7,
     },
     {
-      field: `MPIscore`,
+      field: `MPI_score`,
       headerName: "MPI score",
       flex: 0.5,
     },
@@ -163,7 +174,7 @@ const CommunityFamilies = () => {
       >
         <DataGrid
           //   checkboxSelection
-          getRowId={(row) => row._id}
+          getRowId={(row) => row.familyId}
           rows={communityData}
           columns={columns}
         />
