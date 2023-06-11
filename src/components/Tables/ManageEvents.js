@@ -217,13 +217,13 @@ const ManageEvent = () => {
         </div>
         <div>
           <div style={{margin: "20px", border: "solid black", padding: "20px", borderRadius: "20px", boxShadow: "5px 5px 10px gray"}}>
-              <h4 style={{fontFamily: "sans-serif", }}>Total Number of Acive Events</h4>
+              <h4 style={{fontFamily: "sans-serif", }}>Total Number of Active Events</h4>
               <div style={{fontSize: "40px", color: "green", textAlign: "center", fontFamily: "sans-serif", fontWeight: "bold"}}>{EventData.length}</div>
           </div>
         </div>
         <div>
           <div style={{margin: "20px", border: "solid black", padding: "20px", borderRadius: "20px", boxShadow: "5px 5px 10px gray"}}>
-              <h4 style={{fontFamily: "sans-serif", }}>Total Number of Acive Events</h4>
+              <h4 style={{fontFamily: "sans-serif", }}>Total Number of UnActive Events</h4>
               <div style={{fontSize: "40px", color: "red", textAlign: "center", fontFamily: "sans-serif", fontWeight: "bold"}}>{EventData2.length}</div>
           </div>
         </div>
