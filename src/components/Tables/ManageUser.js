@@ -270,8 +270,8 @@ const ManageUser = () => {
 				>
 
 				<Header
-					title="Manage Members"
-					subtitle="Members Details"
+					title="Manage Events"
+					subtitle="Event Details"
 					/>
 				</Box>
 				{/* <Box ml="auto" display="flex" alignItems="center">

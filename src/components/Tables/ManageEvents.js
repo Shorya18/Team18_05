@@ -228,7 +228,7 @@ const ManageEvent = () => {
       style={{ }}
       >
         <div alignItems="left" style={{width: "50%"}}>
-        <Header title="Manage Members" subtitle="Members Details" />
+        <Header title="Manage Events" subtitle="Event Details" />
 
           {/* <h1 style={{color: "#00539C", fontFamily: "sans-serif", textAlign: "center", fontSize: "50px", margin:"0px"}}>Event Manager</h1>
           <h2 style={{color: "#EEA47F", fontFamily: "sans-serif",textAlign: "center"}}>Welcome To Event Manager</h2> */}
